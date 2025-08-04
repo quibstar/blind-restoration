@@ -1,0 +1,54 @@
+<h1>Don't Forget Your Blind Repair! 📦</h1>
+
+<p>Hi <%= @user.first_name %>,</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #856404;">⏰ Gentle Reminder</h3>
+    <p style="margin-bottom: 0;">We noticed you haven't shipped your blinds yet for <strong>Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %></strong>. To get your blinds repaired and back to perfect working condition, please ship them to us as soon as possible.</p>
+</div>
+
+<h3>Your Order Details:</h3>
+<%= if length(@order.order_line_items) > 0 do %>
+    <%= for line_item <- @order.order_line_items do %>
+        <ul style="padding-left: 20px; margin-bottom: 10px;">
+            <li><strong>Blind Type:</strong> <%= String.capitalize(line_item.blind_type) %></li>
+            <li><strong>Dimensions:</strong> <%= line_item.width %>" × <%= line_item.height %>"</li>
+            <li><strong>Quantity:</strong> <%= line_item.quantity %></li>
+        </ul>
+    <% end %>
+<% end %>
+<ul style="padding-left: 20px;">
+    <li><strong>Service Level:</strong> <%= String.capitalize(@order.service_level) %></li>
+    <li><strong>Total Price:</strong> $<%= @order.total_price %></li>
+</ul>
+
+<div class="info-box">
+    <h3 style="margin-top: 0;">📍 Ship Your Blinds To:</h3>
+    <p style="font-size: 18px; margin: 10px 0;">
+        <strong>BlindShop Repair Center</strong><br>
+        123 Repair Lane, Suite 100<br>
+        Phoenix, AZ 85001
+    </p>
+    <div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 15px;">
+        <strong>Important:</strong> Include Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %> on the package
+    </div>
+</div>
+
+<h3>Need Help?</h3>
+<p>We're here to make shipping easy:</p>
+<ul style="padding-left: 20px;">
+    <li>📋 View our detailed <a href="<%= BlindShopWeb.Endpoint.url() %>/shipping-instructions" style="color: #f59e0b;">shipping instructions</a></li>
+    <li>📧 Reply to this email with any questions</li>
+    <li>📞 Call us at 1-800-BLINDFIX</li>
+</ul>
+
+<div style="text-align: center; margin: 30px 0;">
+    <a href="<%= BlindShopWeb.Endpoint.url() %>/shipping-instructions" class="button button-primary">View Shipping Instructions</a>
+</div>
+
+<p style="color: #666; font-style: italic;">
+    Remember: The sooner you ship, the sooner you'll have your perfectly working blinds back!
+</p>
+
+<p>Best regards,<br>
+The BlindRestoration Team</p>

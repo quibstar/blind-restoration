@@ -1,0 +1,79 @@
+<h1>Order Confirmation</h1>
+
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>Thank you for your order! We're excited to repair your blinds and get them working perfectly again.</p>
+
+<div class="success-box">
+    <h3 style="margin-top: 0; color: #2e7d32;">✅ Order Confirmed</h3>
+    <p style="margin-bottom: 0;"><strong>Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %></strong></p>
+    <p style="font-size: 14px; color: #666; margin-top: 5px;">Payment will be collected after repair completion</p>
+</div>
+
+<h3>Your Order Details:</h3>
+<table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
+    <%= for {line_item, index} <- Enum.with_index(@order.order_line_items) do %>
+        <% if index > 0 do %>
+            <tr>
+                <td colspan="2" style="padding: 5px; border: none; background: #f0f0f0;"></td>
+            </tr>
+        <% end %>
+        <tr style="background: #f8f9fa;">
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Blind Type:</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><%= String.capitalize(line_item.blind_type) %></td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Dimensions:</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><%= line_item.width %>" × <%= line_item.height %>"</td>
+        </tr>
+        <tr style="background: #f8f9fa;">
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Quantity:</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><%= line_item.quantity %></td>
+        </tr>
+    <% end %>
+    <tr>
+        <td colspan="2" style="padding: 5px; border: none; background: #f0f0f0;"></td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Service Level:</strong></td>
+        <td style="padding: 10px; border: 1px solid #dee2e6;"><%= String.capitalize(@order.service_level) %></td>
+    </tr>
+    <tr style="background: #f8f9fa; font-weight: bold;">
+        <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Estimated Price:</strong></td>
+        <td style="padding: 10px; border: 1px solid #dee2e6;">$<%= @order.total_price %></td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Payment Status:</strong></td>
+        <td style="padding: 10px; border: 1px solid #dee2e6; color: #f59e0b;"><strong>⏳ Payment due after repair</strong></td>
+    </tr>
+</table>
+
+<h3>What's Next?</h3>
+<ol>
+    <li><strong>Package your blinds</strong> following our shipping guidelines</li>
+    <li><strong>Include Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %></strong> on the package</li>
+    <li><strong>Ship to us</strong> using any carrier you prefer</li>
+    <li><strong>We'll assess and repair</strong> your blinds professionally</li>
+    <li><strong>Payment invoice</strong> will be sent when repair is complete</li>
+    <li><strong>We'll ship back</strong> after payment is received</li>
+</ol>
+
+<div class="info-box">
+    <h3 style="margin-top: 0;">📍 Ship Your Blinds To:</h3>
+    <p style="font-size: 18px; margin: 10px 0;">
+        <strong>BlindShop Repair Center</strong><br>
+        123 Repair Lane, Suite 100<br>
+        Phoenix, AZ 85001
+    </p>
+</div>
+
+<div style="text-align: center; margin: 30px 0;">
+    <a href="<%= BlindShopWeb.Endpoint.url() %>/shipping-instructions" class="button button-primary">View Shipping Instructions</a>
+</div>
+
+<p style="color: #666; font-style: italic;">
+    We're here to help! If you have any questions about shipping or your order, just reply to this email or give us a call.
+</p>
+
+<p>Best regards,<br>
+The BlindRestoration Team</p>

@@ -1,0 +1,54 @@
+<meta http-equiv="refresh" content="3">
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-md w-full space-y-8">
+        <div class="text-center">
+          <!-- Success Icon -->
+          <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-success text-success-content mb-6">
+            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          
+          <h1 class="text-3xl font-bold text-base-content">Payment Successful!</h1>
+          <p class="mt-2 text-base-content/70">We're processing your order now...</p>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body text-center">
+            <h2 class="card-title justify-center">Processing Your Order</h2>
+            
+            <div class="py-6">
+              <div class="loading loading-spinner loading-lg text-primary"></div>
+            </div>
+            
+            <p class="text-base-content/70">
+              Your payment was successful and we're creating your order. This page will refresh automatically.
+            </p>
+            
+            <div class="text-xs text-base-content/60 mt-4">
+              Payment confirmed for <%= @customer_email %>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <div>
+            <h3 class="font-bold">What's Next?</h3>
+            <div class="text-sm">
+              <p>• You'll receive a confirmation email shortly</p>
+              <p>• The email will include shipping instructions</p>
+              <p>• If this page doesn't update, check your email or visit your dashboard</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a href="/dashboard" class="btn btn-primary">
+            Go to Dashboard
+          </a>
+        </div>
+      </div>
+    </div>

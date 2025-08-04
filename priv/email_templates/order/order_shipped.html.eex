@@ -1,0 +1,40 @@
+<h1>Your Blinds Are On The Way! 🚚</h1>
+
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>Fantastic news! Your freshly repaired blinds have been shipped and are on their way back to you.</p>
+
+<div class="success-box">
+    <h3 style="margin-top: 0; color: #2e7d32;">📦 Shipped!</h3>
+    <p><strong>Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %></strong></p>
+    <%= if @order.tracking_number do %>
+        <p><strong>Tracking Number:</strong> <%= @order.tracking_number %></p>
+    <% else %>
+        <p>Tracking information will be updated soon.</p>
+    <% end %>
+</div>
+
+<div class="info-box">
+    <h3 style="margin-top: 0;">🕐 Expected Delivery</h3>
+    <p style="margin-bottom: 0; font-size: 18px; font-weight: bold;"><%= expected_delivery(@order.service_level) %></p>
+</div>
+
+<h3>What We Did:</h3>
+<ul style="padding-left: 20px;">
+    <li>✅ <strong>Restrung</strong> your blinds with matching cord</li>
+    <li>✅ <strong>Cleaned</strong> and inspected all components</li>
+    <li>✅ <strong>Tested</strong> for smooth operation</li>
+    <li>✅ <strong>Carefully packaged</strong> for safe delivery</li>
+</ul>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #856404;">🎁 Special Offer!</h3>
+    <p style="margin-bottom: 0;">Need another repair? Get <strong>10% off</strong> your next order with code <strong>REPEAT10</strong></p>
+</div>
+
+<p style="color: #666; font-style: italic;">
+    We're confident you'll love how your blinds look and work. Thank you for choosing BlindShop!
+</p>
+
+<p>Best regards,<br>
+The BlindRestoration Team</p>

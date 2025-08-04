@@ -1,0 +1,89 @@
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-md w-full space-y-8">
+        <div class="text-center">
+          <!-- Success Icon -->
+          <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-success text-success-content mb-6">
+            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          
+          <h1 class="text-3xl font-bold text-base-content">Payment Successful!</h1>
+          <p class="mt-2 text-base-content/70">Your order has been created and we've received your payment.</p>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h2 class="card-title text-center">Order Details</h2>
+            
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-base-content/70">Order Number:</span>
+                <span class="font-mono font-semibold">#<%= String.pad_leading(to_string(@order.id), 6, "0") %></span>
+              </div>
+              
+              <div class="flex justify-between">
+                <span class="text-base-content/70">Blind Type:</span>
+                <span class="capitalize"><%= @order.blind_type %></span>
+              </div>
+              
+              <div class="flex justify-between">
+                <span class="text-base-content/70">Dimensions:</span>
+                <span><%= @order.width %>" × <%= @order.height %>"</span>
+              </div>
+              
+              <div class="flex justify-between">
+                <span class="text-base-content/70">Quantity:</span>
+                <span><%= @order.quantity %></span>
+              </div>
+              
+              <div class="flex justify-between">
+                <span class="text-base-content/70">Service Level:</span>
+                <span class="capitalize"><%= @order.service_level %></span>
+              </div>
+              
+              <div class="divider"></div>
+              
+              <div class="flex justify-between font-semibold text-lg">
+                <span>Total Paid:</span>
+                <span class="text-success">$<%= @order.total_price %></span>
+              </div>
+              
+              <div class="text-xs text-base-content/60">
+                Payment ID: <%= @session.payment_intent %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <div>
+            <h3 class="font-bold">What's Next?</h3>
+            <div class="text-sm">
+              <p>• You'll receive a confirmation email shortly at <strong><%= @customer_email %></strong></p>
+              <p>• The email will include shipping instructions for sending us your blinds</p>
+              <p>• We'll repair them professionally and ship them back within 5-7 business days</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <a href="/dashboard" class="btn btn-primary flex-1">
+            View Order Details
+          </a>
+          <a href="/shipping-instructions" class="btn btn-outline flex-1">
+            Shipping Guide
+          </a>
+        </div>
+        
+        <div class="text-center">
+          <p class="text-sm text-base-content/60">
+            Questions? Contact us at 
+            <a href="mailto:support@blindshop.com" class="link link-primary">support@blindshop.com</a>
+          </p>
+        </div>
+      </div>
+    </div>

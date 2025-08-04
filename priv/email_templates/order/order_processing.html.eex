@@ -1,0 +1,37 @@
+<h1>We're Working on Your Blinds! 🔧</h1>
+
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>Great news! We've received your blinds and our expert technician has started working on them.</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #856404;">⚡ Status Update</h3>
+    <p><strong>Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %></strong></p>
+    <p style="margin-bottom: 0;"><strong>Current Status:</strong> Processing</p>
+</div>
+
+<div class="info-box">
+    <h3 style="margin-top: 0;">⏰ Estimated Completion</h3>
+    <p style="margin-bottom: 0; font-size: 18px; font-weight: bold;"><%= estimated_completion(@order.service_level) %></p>
+</div>
+
+<h3>What We're Doing:</h3>
+<ul style="padding-left: 20px;">
+    <li>🔍 <strong>Inspecting</strong> your blinds for all issues</li>
+    <li>🧵 <strong>Replacing</strong> damaged cords with matching material</li>
+    <li>🧽 <strong>Cleaning</strong> all components thoroughly</li>
+    <li>⚙️ <strong>Testing</strong> for smooth operation</li>
+    <li>📦 <strong>Preparing</strong> for safe return shipping</li>
+</ul>
+
+<div class="success-box">
+    <h3 style="margin-top: 0;">📧 Stay Updated</h3>
+    <p style="margin-bottom: 0;">We'll send you another email as soon as your blinds are ready to ship back to you.</p>
+</div>
+
+<p style="color: #666; font-style: italic;">
+    Our 10+ years of blind repair experience ensures your blinds will work like new when you get them back!
+</p>
+
+<p>Best regards,<br>
+The BlindRestoration Team</p>

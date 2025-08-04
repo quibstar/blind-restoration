@@ -1,0 +1,97 @@
+<h1>Your Blinds Are Ready for Pickup!</h1>
+
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>Great news! We've completed the repair of your blinds and they're looking fantastic. Your blinds are now ready for return shipping.</p>
+
+<div class="success-box">
+    <h3 style="margin-top: 0; color: #2e7d32;">🎉 Repair Complete!</h3>
+    <p style="margin-bottom: 0;"><strong>Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %></strong></p>
+    <p style="font-size: 14px; color: #666; margin-top: 5px;">Ready for return shipping after payment</p>
+</div>
+
+<h3>Invoice Details:</h3>
+<table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
+    <%= for {line_item, index} <- Enum.with_index(@order.order_line_items) do %>
+        <% if index > 0 do %>
+            <tr>
+                <td colspan="2" style="padding: 5px; border: none; background: #f0f0f0;"></td>
+            </tr>
+        <% end %>
+        <tr style="background: #f8f9fa;">
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Blind Type:</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><%= String.capitalize(line_item.blind_type) %></td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Dimensions:</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><%= line_item.width %>" × <%= line_item.height %>"</td>
+        </tr>
+        <tr style="background: #f8f9fa;">
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Quantity:</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><%= line_item.quantity %></td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Item Total:</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;">$<%= line_item.line_total %></td>
+        </tr>
+    <% end %>
+    <tr>
+        <td colspan="2" style="padding: 5px; border: none; background: #f0f0f0;"></td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Service Level:</strong></td>
+        <td style="padding: 10px; border: 1px solid #dee2e6;"><%= String.capitalize(@order.service_level) %></td>
+    </tr>
+    <tr style="background: #f8f9fa; font-weight: bold; font-size: 18px;">
+        <td style="padding: 15px; border: 1px solid #dee2e6;"><strong>Total Amount Due:</strong></td>
+        <td style="padding: 15px; border: 1px solid #dee2e6; color: #2e7d32;">$<%= @order.total_price %></td>
+    </tr>
+    <%= if @order.invoice_id do %>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Invoice ID:</strong></td>
+        <td style="padding: 10px; border: 1px solid #dee2e6; font-family: monospace; font-size: 12px;"><%= @order.invoice_id %></td>
+    </tr>
+    <% end %>
+</table>
+
+<h3>What We Fixed:</h3>
+<div style="background: #f8f9fa; padding: 15px; margin: 15px 0; border-left: 4px solid #2e7d32;">
+    <%= if @order.notes do %>
+        <p><%= @order.notes %></p>
+    <% else %>
+        <p>Professional restringing and mechanism repair completed according to your service level.</p>
+    <% end %>
+</div>
+
+<div style="text-align: center; margin: 30px 0; padding: 20px; background: #e7f3ff; border: 1px solid #b3d9ff; border-radius: 8px;">
+    <h3 style="color: #1976d2; margin-top: 0;">Ready to Complete Your Order?</h3>
+    <p style="margin-bottom: 20px;">Click below to pay securely with Stripe and we'll ship your blinds back immediately.</p>
+    <a href="<%= @payment_url %>" style="display: inline-block; background: #1976d2; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">
+        Pay $<%= @order.total_price %> Now
+    </a>
+    <p style="font-size: 12px; color: #666; margin-top: 10px;">Secure payment processing powered by Stripe</p>
+</div>
+
+<h3>What Happens Next:</h3>
+<ol>
+    <li><strong>Click the payment link above</strong> to complete your payment securely</li>
+    <li><strong>We'll ship immediately</strong> after payment confirmation</li>
+    <li><strong>Tracking information</strong> will be sent to your email</li>
+    <li><strong>Enjoy your like-new blinds!</strong> Expect delivery in 2-3 business days</li>
+</ol>
+
+<div style="background: #fff3e0; padding: 15px; margin: 20px 0; border-left: 4px solid #ff9800; border-radius: 4px;">
+    <h4 style="color: #f57c00; margin-top: 0;">📦 Shipping Information</h4>
+    <p style="margin-bottom: 0;">Your blinds will be shipped back to:</p>
+    <p style="font-weight: bold; margin: 5px 0 0 0;"><%= @user.first_name %> <%= @user.last_name %><br>
+    [Shipping address from user profile]</p>
+</div>
+
+<p style="color: #666; font-style: italic;">
+    Questions about your repair or invoice? Just reply to this email or give us a call. We're here to help!
+</p>
+
+<p>Thank you for trusting us with your blind repair!</p>
+
+<p>Best regards,<br>
+The BlindRestoration Team</p>

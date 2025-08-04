@@ -1,0 +1,639 @@
+<div class="min-h-screen">
+  <!-- Hero Section -->
+  <section class="hero min-h-[90vh] relative overflow-hidden">
+    <div class="hero-content relative z-10 text-center">
+      <div class="max-w-5xl mx-auto px-4">
+        <!-- Animated Badge -->
+        <div class="inline-block animate-bounce mb-4">
+          <span class="badge badge-primary badge-lg">🎯 10x Blind Repair Expert</span>
+        </div>
+        
+        <!-- Main Headline -->
+        <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+          <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Professional Blind Repair
+          </span>
+          <br />
+          <span class="text-base-content">
+            Done Right, Delivered Fast
+          </span>
+        </h1>
+        
+        <!-- Subheadline -->
+        <p class="text-xl md:text-2xl mb-8 text-base-content/70 max-w-3xl mx-auto">
+          Mail us your broken blinds. Get an instant quote. We'll fix them professionally and ship them back. 
+          <span class="font-bold text-primary">It's that simple.</span>
+        </p>
+        
+        <!-- CTA Section -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <button class="btn btn-primary btn-lg text-lg px-8" onclick="document.getElementById('quote-calculator').scrollIntoView({behavior: 'smooth'})">
+            Get Instant Quote
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+          <button class="btn btn-outline btn-lg text-lg px-8" onclick="document.getElementById('how-it-works').scrollIntoView({behavior: 'smooth'})">
+            See How It Works
+          </button>
+        </div>
+        
+        <!-- Trust Indicators -->
+        <div class="flex flex-wrap justify-center gap-8 text-base-content/60">
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>5-Day Turnaround</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>100% Satisfaction Guarantee</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Professional Quality</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Animated Background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"></div>
+    <div class="absolute inset-0">
+      <div class="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
+    </div>
+  </section>
+  
+  <!-- Quote Calculator Section -->
+  <section id="quote-calculator" class="py-20 bg-base-200">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Get Your Instant Quote</h2>
+        <p class="text-xl text-base-content/70">Professional blind repair with free return shipping</p>
+      </div>
+      
+      <div class="max-w-3xl mx-auto">
+        <div class="card bg-base-100 shadow-2xl">
+          <div class="card-body">
+            <!-- Service Includes Banner -->
+            <div class="alert alert-info mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <div>
+                <h3 class="font-bold">Every repair includes:</h3>
+                <p class="text-sm">Professional restringing • Matching cord color • Basic cleaning • Return shipping</p>
+              </div>
+            </div>
+            
+            <form id="quote-form" class="space-y-6">
+              <!-- Quantity -->
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-lg font-semibold">Number of Blinds</span>
+                  <span class="label-text-alt text-success">Save up to 10% on multiple blinds!</span>
+                </label>
+                <input type="number" value="1" min="1" max="50" class="input input-bordered input-lg" id="quantity" required />
+              </div>
+              
+              <!-- Blind Type -->
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-lg font-semibold">Blind Type</span>
+                </label>
+                <select class="select select-bordered select-lg w-full" id="blind-type" required>
+                  <option disabled selected>Select your blind type</option>
+                  <option value="mini">Mini Blinds - $55</option>
+                  <option value="vertical">Vertical Blinds - $70</option>
+                  <option value="honeycomb">Honeycomb/Cellular Shades - $85</option>
+                  <option value="wood">Wood/Faux Wood Blinds - $95</option>
+                  <option value="roman">Roman Shades - $110</option>
+                </select>
+              </div>
+              
+              <!-- Dimensions -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-control">
+                  <label class="label">
+                    <span class="label-text text-lg font-semibold">Width (inches)</span>
+                  </label>
+                  <input type="number" placeholder="e.g., 36" class="input input-bordered input-lg" id="width" min="12" max="144" required />
+                </div>
+                <div class="form-control">
+                  <label class="label">
+                    <span class="label-text text-lg font-semibold">Height (inches)</span>
+                  </label>
+                  <input type="number" placeholder="e.g., 48" class="input input-bordered input-lg" id="height" min="12" max="144" required />
+                </div>
+              </div>
+              
+              <!-- Size Category Display -->
+              <div id="size-category" class="hidden">
+                <div class="badge badge-lg badge-primary gap-2">
+                  <span id="size-text">Size Category</span>
+                </div>
+              </div>
+              
+              <!-- Service Level -->
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-lg font-semibold">Service Level</span>
+                </label>
+                <div class="space-y-2" id="service-levels">
+                  <label class="label cursor-pointer justify-start gap-4">
+                    <input type="radio" name="service-level" value="standard" class="radio radio-primary" checked />
+                    <div class="flex-1">
+                      <span class="font-semibold">Standard (7-10 days)</span>
+                      <span class="text-sm text-base-content/60 block">Base price</span>
+                    </div>
+                  </label>
+                  <label class="label cursor-pointer justify-start gap-4">
+                    <input type="radio" name="service-level" value="rush" class="radio radio-primary" />
+                    <div class="flex-1">
+                      <span class="font-semibold">Rush (5 days)</span>
+                      <span class="text-sm text-base-content/60 block">+25%</span>
+                    </div>
+                  </label>
+                  <label class="label cursor-pointer justify-start gap-4" id="priority-option">
+                    <input type="radio" name="service-level" value="priority" class="radio radio-primary" />
+                    <div class="flex-1">
+                      <span class="font-semibold">Priority (3 days)</span>
+                      <span class="text-sm text-base-content/60 block">+50%</span>
+                    </div>
+                  </label>
+                  <label class="label cursor-pointer justify-start gap-4" id="express-option">
+                    <input type="radio" name="service-level" value="express" class="radio radio-primary" />
+                    <div class="flex-1">
+                      <span class="font-semibold">Express (2 days)</span>
+                      <span class="text-sm text-base-content/60 block">+75% (Only for &lt;5 blinds with in-stock cords)</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Quote Display -->
+              <div id="quote-display" class="hidden">
+                <div class="divider"></div>
+                <div class="bg-primary/10 rounded-lg p-6">
+                  <div class="text-center mb-4">
+                    <p class="text-base-content/70 mb-2">Your Quote:</p>
+                    <p class="text-5xl font-bold text-primary" id="quote-amount">$0</p>
+                  </div>
+                  <div id="price-breakdown" class="text-sm text-base-content/60 space-y-1">
+                    <!-- Breakdown will be inserted here -->
+                  </div>
+                  <div id="volume-discount-message" class="text-center mt-4 text-success font-semibold hidden">
+                    <!-- Discount message -->
+                  </div>
+                </div>
+              </div>
+              
+              <!-- CTA Buttons -->
+              <div class="flex gap-4">
+                <button type="button" class="btn btn-primary btn-lg flex-1" onclick="calculateQuote()">
+                  Calculate Quote
+                </button>
+                <button type="button" class="btn btn-secondary btn-lg flex-1 hidden" id="proceed-btn" onclick="proceedToOrder()">
+                  Proceed to Order
+                </button>
+              </div>
+            </form>
+            
+            <!-- Business Account CTA -->
+            <div class="text-center mt-6 pt-6 border-t">
+              <p class="text-base-content/60">Property manager or business?</p>
+              <a href="mailto:business@blindshop.com" class="link link-primary">Contact us for special pricing</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="py-20 bg-base-100">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">How It Works</h2>
+        <p class="text-xl text-base-content/70">Simple 4-step process to get your blinds fixed</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <!-- Step 1 -->
+        <div class="text-center">
+          <div class="bg-primary text-primary-content rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+            1
+          </div>
+          <h3 class="text-xl font-bold mb-2">Get Quote</h3>
+          <p class="text-base-content/70">Enter your blind dimensions for an instant price</p>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="text-center">
+          <div class="bg-primary text-primary-content rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+            2
+          </div>
+          <h3 class="text-xl font-bold mb-2">Ship to Us</h3>
+          <p class="text-base-content/70">Pack and mail your blinds with our shipping label</p>
+          <.link navigate="/shipping-instructions" class="text-primary hover:underline text-sm mt-2 inline-block">
+            View Instructions →
+          </.link>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="text-center">
+          <div class="bg-primary text-primary-content rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+            3
+          </div>
+          <h3 class="text-xl font-bold mb-2">We Fix It</h3>
+          <p class="text-base-content/70">Professional restringing by a 10x blind expert</p>
+        </div>
+        
+        <!-- Step 4 -->
+        <div class="text-center">
+          <div class="bg-primary text-primary-content rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+            4
+          </div>
+          <h3 class="text-xl font-bold mb-2">Get It Back</h3>
+          <p class="text-base-content/70">Receive your perfectly working blinds</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonials Section -->
+  <section class="py-20 bg-base-200">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">What Our Customers Say</h2>
+        <p class="text-xl text-base-content/70">Join hundreds of satisfied customers</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- Testimonial 1 -->
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <div class="rating mb-4">
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+            </div>
+            <p class="text-base-content/80 mb-4">"Saved me from buying new blinds! Quick turnaround and perfect repair. Highly recommend!"</p>
+            <p class="font-bold">- Sarah M.</p>
+            <p class="text-sm text-base-content/60">Homeowner</p>
+          </div>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <div class="rating mb-4">
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+            </div>
+            <p class="text-base-content/80 mb-4">"As a property manager, this service is a game-changer. Professional and cost-effective!"</p>
+            <p class="font-bold">- Mike T.</p>
+            <p class="text-sm text-base-content/60">Property Manager</p>
+          </div>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <div class="rating mb-4">
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+              <input type="radio" class="mask mask-star-2 bg-warning" checked disabled />
+            </div>
+            <p class="text-base-content/80 mb-4">"My expensive Hunter Douglas blinds work like new again. Worth every penny!"</p>
+            <p class="font-bold">- Lisa K.</p>
+            <p class="text-sm text-base-content/60">Interior Designer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Final CTA Section -->
+  <section class="py-20 bg-gradient-to-r from-primary to-secondary text-primary-content">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Ready to Fix Your Blinds?</h2>
+      <p class="text-xl mb-8 opacity-90">Get your instant quote now and save up to 80% vs. replacement</p>
+      <button class="btn btn-lg bg-base-100 text-base-content hover:bg-base-200 border-0" onclick="document.getElementById('quote-calculator').scrollIntoView({behavior: 'smooth'})">
+        Get Started Now
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </button>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Update express options based on quantity
+  function updateServiceOptions() {
+    const quantity = parseInt(document.getElementById('quantity').value) || 1;
+    const expressOption = document.getElementById('express-option');
+    const priorityOption = document.getElementById('priority-option');
+    
+    if (quantity >= 5) {
+      expressOption.classList.add('opacity-50');
+      expressOption.querySelector('input').disabled = true;
+      priorityOption.classList.add('opacity-50');
+      priorityOption.querySelector('input').disabled = true;
+      
+      // Switch to standard if express/priority was selected
+      const selectedService = document.querySelector('input[name="service-level"]:checked').value;
+      if (selectedService === 'express' || selectedService === 'priority') {
+        document.querySelector('input[name="service-level"][value="standard"]').checked = true;
+      }
+    } else {
+      expressOption.classList.remove('opacity-50');
+      expressOption.querySelector('input').disabled = false;
+      priorityOption.classList.remove('opacity-50');
+      priorityOption.querySelector('input').disabled = false;
+    }
+    
+    // Show free express message for 11+ blinds
+    if (quantity >= 11) {
+      document.querySelector('#volume-discount-message').innerHTML = 
+        '🎉 You qualify for 10% off + FREE Express service!';
+    }
+  }
+  
+  function calculateQuote() {
+    const quantity = parseInt(document.getElementById('quantity').value) || 1;
+    const blindType = document.getElementById('blind-type').value;
+    const width = parseInt(document.getElementById('width').value) || 0;
+    const height = parseInt(document.getElementById('height').value) || 0;
+    const serviceLevel = document.querySelector('input[name="service-level"]:checked').value;
+    
+    if (!blindType || !width || !height) {
+      alert('Please fill in all fields');
+      return;
+    }
+    
+    // New base prices
+    const basePrices = {
+      'mini': 55,
+      'vertical': 70,
+      'honeycomb': 85,
+      'wood': 95,
+      'roman': 110
+    };
+    
+    let basePrice = basePrices[blindType] || 55;
+    
+    // Calculate square footage
+    const sqft = (width * height) / 144;
+    
+    // Size multipliers
+    let sizeMultiplier = 1.0;
+    let sizeCategory = 'Small';
+    
+    if (sqft <= 15) {
+      sizeMultiplier = 1.0;
+      sizeCategory = 'Small (0-15 sq ft)';
+    } else if (sqft <= 25) {
+      sizeMultiplier = 1.2;
+      sizeCategory = 'Medium (15-25 sq ft)';
+    } else if (sqft <= 35) {
+      sizeMultiplier = 1.4;
+      sizeCategory = 'Medium+ (25-35 sq ft)';
+    } else if (sqft <= 50) {
+      sizeMultiplier = 1.7;
+      sizeCategory = 'Large (35-50 sq ft)';
+    } else if (sqft <= 70) {
+      sizeMultiplier = 2.0;
+      sizeCategory = 'X-Large (50-70 sq ft)';
+    } else {
+      sizeMultiplier = 2.5;
+      sizeCategory = 'XX-Large (70+ sq ft)';
+    }
+    
+    // Show size category
+    document.getElementById('size-text').textContent = sizeCategory;
+    document.getElementById('size-category').classList.remove('hidden');
+    
+    // Calculate base with size
+    let pricePerBlind = basePrice * sizeMultiplier;
+    
+    // Add surcharges for oversized
+    let widthSurcharge = 0;
+    let heightSurcharge = 0;
+    
+    if (width > 72) widthSurcharge = 25;
+    if (height > 84) heightSurcharge = 20;
+    if (width > 72 && height > 84) {
+      widthSurcharge = 0;
+      heightSurcharge = 40; // Combined surcharge
+    }
+    
+    pricePerBlind += widthSurcharge + heightSurcharge;
+    
+    // Service level multiplier
+    let serviceMultiplier = 1.0;
+    switch(serviceLevel) {
+      case 'rush': serviceMultiplier = 1.25; break;
+      case 'priority': serviceMultiplier = 1.5; break;
+      case 'express': serviceMultiplier = 1.75; break;
+    }
+    
+    pricePerBlind *= serviceMultiplier;
+    
+    // Calculate subtotal
+    let subtotal = pricePerBlind * quantity;
+    
+    // Volume discounts
+    let volumeDiscount = 0;
+    let discountPercent = 0;
+    
+    if (quantity >= 2 && quantity <= 3) {
+      discountPercent = 2.5;
+    } else if (quantity >= 4 && quantity <= 6) {
+      discountPercent = 5;
+    } else if (quantity >= 7 && quantity <= 10) {
+      discountPercent = 7.5;
+    } else if (quantity >= 11) {
+      discountPercent = 10;
+    }
+    
+    volumeDiscount = subtotal * (discountPercent / 100);
+    let totalPrice = subtotal - volumeDiscount;
+    
+    // Build price breakdown
+    let breakdown = `
+      <div class="space-y-1">
+        <div class="flex justify-between">
+          <span>Base price (${blindType}):</span>
+          <span>$${basePrice}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Size adjustment (${sizeMultiplier}x):</span>
+          <span>$${((basePrice * sizeMultiplier) - basePrice).toFixed(2)}</span>
+        </div>
+    `;
+    
+    if (widthSurcharge || heightSurcharge) {
+      const totalSurcharge = widthSurcharge + heightSurcharge;
+      breakdown += `
+        <div class="flex justify-between">
+          <span>Oversize surcharge:</span>
+          <span>+$${totalSurcharge}</span>
+        </div>
+      `;
+    }
+    
+    if (serviceMultiplier > 1) {
+      breakdown += `
+        <div class="flex justify-between">
+          <span>${serviceLevel.charAt(0).toUpperCase() + serviceLevel.slice(1)} service:</span>
+          <span>+${((serviceMultiplier - 1) * 100).toFixed(0)}%</span>
+        </div>
+      `;
+    }
+    
+    if (quantity > 1) {
+      breakdown += `
+        <div class="flex justify-between font-semibold pt-2 border-t">
+          <span>Subtotal (${quantity} blinds):</span>
+          <span>$${subtotal.toFixed(2)}</span>
+        </div>
+      `;
+    }
+    
+    if (volumeDiscount > 0) {
+      breakdown += `
+        <div class="flex justify-between text-success">
+          <span>Volume discount (${discountPercent}%):</span>
+          <span>-$${volumeDiscount.toFixed(2)}</span>
+        </div>
+      `;
+    }
+    
+    breakdown += '</div>';
+    
+    // Store quote data for order creation
+    currentQuoteData = {
+      blind_type: blindType,
+      width: width,
+      height: height,
+      quantity: quantity,
+      service_level: serviceLevel,
+      base_price: basePrice,
+      size_multiplier: sizeMultiplier,
+      surcharge: widthSurcharge + heightSurcharge,
+      volume_discount: volumeDiscount,
+      total_price: totalPrice
+    };
+    
+    // Display results
+    document.getElementById('quote-amount').textContent = `$${totalPrice.toFixed(2)}`;
+    document.getElementById('price-breakdown').innerHTML = breakdown;
+    document.getElementById('quote-display').classList.remove('hidden');
+    document.getElementById('proceed-btn').classList.remove('hidden');
+    
+    // Show discount message
+    if (volumeDiscount > 0) {
+      document.getElementById('volume-discount-message').classList.remove('hidden');
+      if (quantity >= 11) {
+        document.getElementById('volume-discount-message').innerHTML = 
+          '🎉 You saved $' + volumeDiscount.toFixed(2) + ' with volume discount + FREE Express service included!';
+      } else {
+        document.getElementById('volume-discount-message').innerHTML = 
+          '✅ You saved $' + volumeDiscount.toFixed(2) + ' with our volume discount!';
+      }
+    } else {
+      document.getElementById('volume-discount-message').classList.add('hidden');
+    }
+  }
+  
+  // Add event listeners
+  document.getElementById('quantity').addEventListener('change', updateServiceOptions);
+  document.getElementById('quantity').addEventListener('input', updateServiceOptions);
+  
+  // Store quote data
+  let currentQuoteData = null;
+  
+  function proceedToOrder() {
+    if (!currentQuoteData) {
+      alert('Please calculate a quote first');
+      return;
+    }
+    
+    // Create URL with quote data as query parameters
+    const params = new URLSearchParams({
+      blind_type: currentQuoteData.blind_type,
+      width: currentQuoteData.width,
+      height: currentQuoteData.height,
+      quantity: currentQuoteData.quantity,
+      service_level: currentQuoteData.service_level,
+      base_price: currentQuoteData.base_price,
+      size_multiplier: currentQuoteData.size_multiplier,
+      surcharge: currentQuoteData.surcharge,
+      volume_discount: currentQuoteData.volume_discount,
+      total_price: currentQuoteData.total_price
+    });
+    
+    // Check if user is logged in
+    const isLoggedIn = document.querySelector('header[data-logged-in="true"]');
+    
+    if (isLoggedIn) {
+      window.location.href = `/orders/new?${params.toString()}`;
+    } else {
+      // Redirect to login with return URL including quote params
+      window.location.href = `/users/log-in?return_to=${encodeURIComponent(`/orders/new?${params.toString()}`)}`;
+    }
+  }
+  
+  // Add smooth animations on scroll
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-fade-in-up');
+      }
+    });
+  }, observerOptions);
+  
+  // Observe all sections
+  document.querySelectorAll('section').forEach(section => {
+    observer.observe(section);
+  });
+</script>
+
+<style>
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out;
+  }
+  
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+</style>

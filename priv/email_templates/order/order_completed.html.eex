@@ -1,0 +1,36 @@
+<h1>Your Order is Complete - Thank You! 🎉</h1>
+
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>We hope you love your repaired blinds! It was our pleasure to get them working perfectly again.</p>
+
+<div class="success-box">
+    <h3 style="margin-top: 0; color: #2e7d32;">✨ Order Complete</h3>
+    <p style="margin-bottom: 0;"><strong>Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %></strong> - Your blinds should be working like new!</p>
+</div>
+
+<p>Your satisfaction is our top priority. If you have any questions or concerns about your repaired blinds, please don't hesitate to reach out.</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #856404;">🎁 Special Offer Just for You!</h3>
+    <div style="text-align: center; margin: 15px 0;">
+        <p style="font-size: 24px; font-weight: bold; color: #f59e0b; margin: 10px 0;">15% OFF</p>
+        <p style="margin: 5px 0;">your next repair order</p>
+        <p style="font-family: monospace; font-size: 18px; font-weight: bold; background: #f8f9fa; padding: 10px; border-radius: 5px; display: inline-block;">REPEAT15</p>
+        <p style="margin: 5px 0; font-size: 14px; color: #666;">Valid for 60 days</p>
+    </div>
+</div>
+
+<h3>Help Us Grow! 📣</h3>
+<p>Know someone with broken blinds? <strong>Refer them to BlindShop</strong> and you'll both get 20% off!</p>
+
+<div style="text-align: center; margin: 30px 0;">
+    <a href="<%= BlindShopWeb.Endpoint.url() %>" class="button button-primary">Order Another Repair</a>
+</div>
+
+<p style="color: #666; font-style: italic;">
+    Thank you for choosing BlindShop. We truly appreciate your business and trust in our expert repair service!
+</p>
+
+<p>Best regards,<br>
+The BlindRestoration Team</p>
