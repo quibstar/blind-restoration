@@ -167,4 +167,11 @@ defmodule BlindShop.Admin.Orders do
     
     update_order(order, attrs)
   end
+
+  @doc """
+  Update order notes (admin action).
+  """
+  def update_order_notes(%Order{} = order, notes) do
+    update_order(order, %{notes: notes})
+  end
 end

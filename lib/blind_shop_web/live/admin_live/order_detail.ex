@@ -396,6 +396,36 @@ defmodule BlindShopWeb.AdminLive.OrderDetail do
           </div>
         <% end %>
       </div>
+
+      <!-- Notes Modal -->
+      <%= if @show_notes_modal do %>
+        <div class="modal modal-open">
+          <div class="modal-box">
+            <h3 class="font-bold text-lg">Order Notes</h3>
+            <p class="py-2 text-sm text-base-content/70">
+              Add or edit notes for Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %>
+            </p>
+            
+            <form phx-submit="save_notes">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Notes</span>
+                </label>
+                <textarea 
+                  name="notes" 
+                  class="textarea textarea-bordered h-32" 
+                  placeholder="Enter notes about this order..."
+                ><%= @order.notes || "" %></textarea>
+              </div>
+              
+              <div class="modal-action">
+                <button type="submit" class="btn btn-primary">Save Notes</button>
+                <button type="button" class="btn" phx-click="close_notes_modal">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      <% end %>
     </Layouts.app>
     """
   end
@@ -407,7 +437,9 @@ defmodule BlindShopWeb.AdminLive.OrderDetail do
     {:ok,
      socket
      |> assign(:page_title, "Order ##{String.pad_leading(to_string(order.id), 6, "0")}")
-     |> assign(:order, order)}
+     |> assign(:order, order)
+     |> assign(:show_notes_modal, false)
+     |> assign(:notes_form, to_form(%{"notes" => order.notes || ""}))}
   end
 
   @impl true
@@ -452,8 +484,27 @@ defmodule BlindShopWeb.AdminLive.OrderDetail do
   end
 
   def handle_event("add_notes", _params, socket) do
-    # This would typically open a modal or form for adding notes
-    {:noreply, put_flash(socket, :info, "Notes feature coming soon")}
+    {:noreply, assign(socket, show_notes_modal: true)}
+  end
+
+  def handle_event("close_notes_modal", _params, socket) do
+    {:noreply, assign(socket, show_notes_modal: false)}
+  end
+
+  def handle_event("save_notes", %{"notes" => notes}, socket) do
+    order = socket.assigns.order
+
+    case AdminOrders.update_order_notes(order, notes) do
+      {:ok, updated_order} ->
+        {:noreply,
+         socket
+         |> assign(:order, updated_order)
+         |> assign(:show_notes_modal, false)
+         |> put_flash(:info, "Notes updated successfully")}
+
+      {:error, _changeset} ->
+        {:noreply, put_flash(socket, :error, "Failed to update notes")}
+    end
   end
 
   @impl true
