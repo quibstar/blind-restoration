@@ -2,7 +2,7 @@ defmodule BlindShopWeb.AdminLive.OrderDetail do
   use BlindShopWeb, :live_view
 
   alias BlindShop.Admin.Orders, as: AdminOrders
-  alias BlindShop.Orders.Order
+  alias BlindShop.Orders.{Order, OrderNote}
 
   @impl true
   def render(assigns) do
@@ -386,43 +386,114 @@ defmodule BlindShopWeb.AdminLive.OrderDetail do
           </div>
         </div>
         
-    <!-- Special Instructions -->
-        <%= if @order.notes && @order.notes != "" do %>
-          <div class="card bg-base-100 shadow-xl mt-6">
-            <div class="card-body">
-              <h3 class="card-title">Special Instructions</h3>
-              <p class="whitespace-pre-wrap">{@order.notes}</p>
+    <!-- Order Notes -->
+        <div class="card bg-base-100 shadow-xl mt-6">
+          <div class="card-body">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="card-title">Order Notes</h3>
+              <button phx-click="add_notes" class="btn btn-sm btn-primary">
+                Add Note
+              </button>
             </div>
-          </div>
-        <% end %>
-      </div>
 
-      <!-- Notes Modal -->
+            <%= if Enum.empty?(@order.order_notes) do %>
+              <p class="text-base-content/60 italic">
+                No notes yet. Click "Add Note" to add the first note.
+              </p>
+            <% else %>
+              <div class="space-y-4">
+                <%= for note <- @order.order_notes do %>
+                  <div class="border border-base-300 rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                      <div class="flex items-center gap-2">
+                        <span class="badge badge-primary badge-sm">
+                          {String.capitalize(note.note_type)}
+                        </span>
+                        <%= if note.admin do %>
+                          <span class="text-sm text-base-content/70">
+                            by {note.admin.email}
+                          </span>
+                        <% end %>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <div class="text-right">
+                          <time class="text-xs text-base-content/50 block" title={note.inserted_at}>
+                            {Calendar.strftime(note.inserted_at, "%b %d, %Y at %I:%M %p")}
+                          </time>
+                          <%= if note.updated_at != note.inserted_at do %>
+                            <time
+                              class="text-xs text-base-content/40 block"
+                              title={"Updated: #{note.updated_at}"}
+                            >
+                              (edited {Calendar.strftime(note.updated_at, "%b %d at %I:%M %p")})
+                            </time>
+                          <% end %>
+                        </div>
+                        <button
+                          phx-click="edit_note"
+                          phx-value-note-id={note.id}
+                          class="btn btn-xs btn-ghost"
+                          title="Edit note"
+                        >
+                          <.icon name="hero-pencil" class="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                    <p class="whitespace-pre-wrap text-sm">{note.content}</p>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      
+    <!-- Notes Modal -->
       <%= if @show_notes_modal do %>
         <div class="modal modal-open">
           <div class="modal-box">
-            <h3 class="font-bold text-lg">Order Notes</h3>
+            <h3 class="font-bold text-lg">
+              {if @editing_note_id, do: "Edit Note", else: "Add Note"}
+            </h3>
             <p class="py-2 text-sm text-base-content/70">
-              Add or edit notes for Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %>
+              <%= if @editing_note_id do %>
+                Edit note for Order #{String.pad_leading(to_string(@order.id), 6, "0")}
+              <% else %>
+                Add a new note for Order #{String.pad_leading(to_string(@order.id), 6, "0")}
+              <% end %>
             </p>
-            
-            <form phx-submit="save_notes">
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text">Notes</span>
-                </label>
-                <textarea 
-                  name="notes" 
-                  class="textarea textarea-bordered h-32" 
-                  placeholder="Enter notes about this order..."
-                ><%= @order.notes || "" %></textarea>
-              </div>
-              
+
+            <.form for={@note_form} phx-submit="save_note" phx-change="validate_note">
+              <.input
+                field={@note_form[:note_type]}
+                type="select"
+                label="Note Type"
+                options={[
+                  {"General", "general"},
+                  {"Repair Update", "repair"},
+                  {"Shipping Info", "shipping"},
+                  {"Payment Issue", "payment"},
+                  {"Customer Service", "customer_service"}
+                ]}
+              />
+
+              <.input
+                field={@note_form[:content]}
+                type="textarea"
+                label="Note Content"
+                placeholder="Enter your note about this order..."
+                rows="6"
+              />
+
               <div class="modal-action">
-                <button type="submit" class="btn btn-primary">Save Notes</button>
-                <button type="button" class="btn" phx-click="close_notes_modal">Cancel</button>
+                <.button type="submit" class="btn-primary">
+                  {if @editing_note_id, do: "Update Note", else: "Add Note"}
+                </.button>
+                <.button type="button" class="btn-ghost" phx-click="close_notes_modal">
+                  Cancel
+                </.button>
               </div>
-            </form>
+            </.form>
           </div>
         </div>
       <% end %>
@@ -433,13 +504,15 @@ defmodule BlindShopWeb.AdminLive.OrderDetail do
   @impl true
   def mount(%{"id" => id}, _session, socket) do
     order = AdminOrders.get_order!(id)
+    note_changeset = AdminOrders.change_order_note(%OrderNote{})
 
     {:ok,
      socket
      |> assign(:page_title, "Order ##{String.pad_leading(to_string(order.id), 6, "0")}")
      |> assign(:order, order)
      |> assign(:show_notes_modal, false)
-     |> assign(:notes_form, to_form(%{"notes" => order.notes || ""}))}
+     |> assign(:editing_note_id, nil)
+     |> assign(:note_form, to_form(note_changeset))}
   end
 
   @impl true
@@ -484,26 +557,101 @@ defmodule BlindShopWeb.AdminLive.OrderDetail do
   end
 
   def handle_event("add_notes", _params, socket) do
-    {:noreply, assign(socket, show_notes_modal: true)}
+    note_changeset = AdminOrders.change_order_note(%OrderNote{})
+
+    {:noreply,
+     socket
+     |> assign(:show_notes_modal, true)
+     |> assign(:editing_note_id, nil)
+     |> assign(:note_form, to_form(note_changeset))}
+  end
+
+  def handle_event("edit_note", %{"note-id" => note_id}, socket) do
+    note_id = String.to_integer(note_id)
+    note = Enum.find(socket.assigns.order.order_notes, &(&1.id == note_id))
+
+    if note do
+      note_changeset = AdminOrders.change_order_note(note)
+
+      {:noreply,
+       socket
+       |> assign(:show_notes_modal, true)
+       |> assign(:editing_note_id, note_id)
+       |> assign(:note_form, to_form(note_changeset))}
+    else
+      {:noreply, put_flash(socket, :error, "Note not found")}
+    end
   end
 
   def handle_event("close_notes_modal", _params, socket) do
-    {:noreply, assign(socket, show_notes_modal: false)}
+    {:noreply,
+     socket
+     |> assign(:show_notes_modal, false)
+     |> assign(:editing_note_id, nil)}
   end
 
-  def handle_event("save_notes", %{"notes" => notes}, socket) do
+  def handle_event("validate_note", %{"order_note" => note_params}, socket) do
+    note_form =
+      %OrderNote{}
+      |> AdminOrders.change_order_note(note_params)
+      |> Map.put(:action, :validate)
+      |> to_form()
+
+    {:noreply, assign(socket, note_form: note_form)}
+  end
+
+  def handle_event("save_note", %{"order_note" => note_params}, socket) do
     order = socket.assigns.order
+    admin = socket.assigns.current_scope.admin
 
-    case AdminOrders.update_order_notes(order, notes) do
-      {:ok, updated_order} ->
-        {:noreply,
-         socket
-         |> assign(:order, updated_order)
-         |> assign(:show_notes_modal, false)
-         |> put_flash(:info, "Notes updated successfully")}
+    case socket.assigns.editing_note_id do
+      nil ->
+        # Creating a new note
+        case AdminOrders.create_order_note(order, admin, note_params) do
+          {:ok, _note} ->
+            # Reload order with updated notes
+            updated_order = AdminOrders.get_order!(order.id)
 
-      {:error, _changeset} ->
-        {:noreply, put_flash(socket, :error, "Failed to update notes")}
+            {:noreply,
+             socket
+             |> assign(:order, updated_order)
+             |> assign(:show_notes_modal, false)
+             |> assign(:editing_note_id, nil)
+             |> put_flash(:info, "Note added successfully")}
+
+          {:error, changeset} ->
+            {:noreply,
+             socket
+             |> assign(:note_form, to_form(changeset))
+             |> put_flash(:error, "Failed to add note")}
+        end
+
+      note_id ->
+        # Updating existing note
+        note = Enum.find(order.order_notes, &(&1.id == note_id))
+
+        if note do
+          case AdminOrders.update_order_note(note, note_params) do
+            {:ok, _updated_note} ->
+              # Reload order with updated notes
+              updated_order = AdminOrders.get_order!(order.id)
+
+              {:noreply,
+               socket
+               |> assign(:order, updated_order)
+               |> assign(:show_notes_modal, false)
+               |> assign(:editing_note_id, nil)
+               |> put_flash(:info, "Note updated successfully")}
+
+            {:error, changeset} ->
+              {:noreply,
+               socket
+               |> assign(:note_form, to_form(changeset))
+               |> put_flash(:error, "Failed to update note")}
+          end
+        else
+          {:noreply, put_flash(socket, :error, "Note not found")}
+        end
     end
   end
 

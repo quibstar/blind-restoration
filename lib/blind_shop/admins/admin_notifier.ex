@@ -9,7 +9,7 @@ defmodule BlindShop.Admins.AdminNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"BlindShop", "contact@example.com"})
+      |> from({"BlindShop", "support@blindrestoration.com"})
       |> subject(subject)
       |> text_body(body)
 

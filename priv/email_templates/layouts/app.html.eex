@@ -97,7 +97,7 @@
         </div>
         <div class="footer">
             <p style="margin: 0 0 10px 0;">&copy; <%= Date.utc_today().year %> BlindRestoration. All rights reserved.</p>
-            <p style="margin: 0;">Questions? Email us at orders@BlindRestoration.com or call 1-800-BLINDFIX</p>
+            <p style="margin: 0;">Questions? Email us at support@blindrestoration.com or call 1-800-BLINDFIX</p>
         </div>
     </div>
 </body>

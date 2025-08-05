@@ -297,11 +297,6 @@ defmodule BlindShopWeb.OrderLive.Show do
                   <.link navigate={~p"/shipping-instructions"} class="btn btn-primary">
                     View Shipping Instructions
                   </.link>
-                  <%= if @order.shipping_label_url do %>
-                    <a href={@order.shipping_label_url} target="_blank" class="btn btn-outline">
-                      Download Shipping Label
-                    </a>
-                  <% end %>
                 </div>
               <% "processing" -> %>
                 <p>

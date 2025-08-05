@@ -8,7 +8,7 @@ defmodule BlindShopWeb.Emails.OrderEmail do
     email =
       new()
       |> to({recipient_name, recipient_email})
-      |> from({"BlindShop", "orders@blindshop.com"})
+      |> from({"BlindShop", "support@blindrestoration.com"})
       |> subject(subject)
       |> text_body(text_body)
       |> html_body(html_body)
@@ -30,7 +30,8 @@ defmodule BlindShopWeb.Emails.OrderEmail do
     helper_assigns =
       Map.merge(atom_assigns, %{
         estimated_completion: &estimated_completion/1,
-        expected_delivery: &expected_delivery/1
+        expected_delivery: &expected_delivery/1,
+        get_tracking_url: &get_tracking_url/2
       })
 
     # Render the specific email template
@@ -140,7 +141,13 @@ defmodule BlindShopWeb.Emails.OrderEmail do
     Great news! Your freshly repaired blinds have been shipped and are on their way back to you.
 
     #{if order.tracking_number do
-      "Tracking Number: #{order.tracking_number}"
+      carrier_text = if order.carrier, do: "#{String.upcase(order.carrier)} ", else: ""
+      "#{carrier_text}Tracking Number: #{order.tracking_number}"
+      <> if order.carrier && order.tracking_number do
+        "\nTrack at: #{get_tracking_url(order.carrier, order.tracking_number)}"
+      else
+        ""
+      end
     else
       "Tracking information will be updated soon."
     end}
@@ -253,7 +260,7 @@ defmodule BlindShopWeb.Emails.OrderEmail do
 
     #{payment_url}
 
-    Questions? Reply to this email or contact us at orders@blindshop.com
+    Questions? Reply to this email or contact us at support@blindrestoration.com
 
     Best regards,
     The BlindRestoration Team
@@ -271,7 +278,7 @@ defmodule BlindShopWeb.Emails.OrderEmail do
     # Return email struct for OrderNotifier to deliver
     new()
     |> to({"#{user.first_name} #{user.last_name}", user.email})
-    |> from({"BlindShop", "orders@blindshop.com"})
+    |> from({"BlindShop", "support@blindrestoration.com"})
     |> subject(subject)
     |> text_body(text_body)
     |> html_body(html_body)
@@ -337,4 +344,16 @@ defmodule BlindShopWeb.Emails.OrderEmail do
       _ -> String.capitalize(blind_type || "Unknown")
     end
   end
+
+  # Generate tracking URL for different carriers
+  defp get_tracking_url(carrier, tracking_number) when is_binary(carrier) and is_binary(tracking_number) do
+    case String.downcase(carrier) do
+      "ups" -> "https://www.ups.com/track?track=yes&trackNums=#{tracking_number}"
+      "fedex" -> "https://www.fedex.com/fedextrack/?trknbr=#{tracking_number}"
+      "usps" -> "https://tools.usps.com/go/TrackConfirmAction?tLabels=#{tracking_number}"
+      "dhl" -> "https://www.dhl.com/us-en/home/tracking.html?tracking-id=#{tracking_number}"
+      _ -> "https://www.google.com/search?q=track+package+#{tracking_number}"
+    end
+  end
+  defp get_tracking_url(_, _), do: ""
 end

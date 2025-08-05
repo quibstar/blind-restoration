@@ -5,26 +5,55 @@ defmodule BlindShop.Accounts.UserNotifier do
   alias BlindShop.Accounts.User
 
   # Delivers the email using the application mailer.
-  defp deliver(recipient, subject, body) do
+  defp deliver(recipient, subject, text_body, html_body) do
     email =
       new()
       |> to(recipient)
-      |> from({"BlindShop", "contact@example.com"})
+      |> from({"BlindShop", "support@blindrestoration.com"})
       |> subject(subject)
-      |> text_body(body)
+      |> text_body(text_body)
+      |> html_body(html_body)
 
     with {:ok, _metadata} <- Mailer.deliver(email) do
       {:ok, email}
     end
   end
 
+  # Render email template with layout
+  defp render_template(template_name, assigns) do
+    # The path to the templates directory
+    templates_path = "priv/email_templates"
+
+    # Convert assigns to atom map for proper @ access in templates
+    atom_assigns = assigns_to_atom_map(assigns)
+
+    # Render the specific email template
+    template_path = Path.join([templates_path, "auth", "#{template_name}.html.eex"])
+    inner_content = EEx.eval_file(template_path, assigns: atom_assigns)
+
+    # Render the layout with the content
+    layout_assigns = Map.put(atom_assigns, :inner_content, inner_content)
+    layout_path = Path.join([templates_path, "layouts", "app.html.eex"])
+
+    EEx.eval_file(layout_path, assigns: layout_assigns)
+  end
+
+  # Convert string keys to atom keys for proper @ access in templates
+  defp assigns_to_atom_map(assigns) do
+    Enum.into(assigns, %{}, fn {key, value} ->
+      atom_key = if is_atom(key), do: key, else: String.to_atom(key)
+      {atom_key, value}
+    end)
+  end
+
   @doc """
   Deliver instructions to update a user email.
   """
   def deliver_update_email_instructions(user, url) do
-    deliver(user.email, "Update email instructions", """
-
-    ==============================
+    subject = "Update Your Email Address - BlindRestoration"
+    
+    text_body = """
+    Update Your Email Address
 
     Hi #{user.email},
 
@@ -34,8 +63,17 @@ defmodule BlindShop.Accounts.UserNotifier do
 
     If you didn't request this change, please ignore this.
 
-    ==============================
-    """)
+    Best regards,
+    The BlindRestoration Team
+    """
+
+    html_body = render_template("email_update_instructions", %{
+      user: user,
+      url: url,
+      subject: subject
+    })
+
+    deliver(user.email, subject, text_body, html_body)
   end
 
   @doc """
@@ -49,9 +87,10 @@ defmodule BlindShop.Accounts.UserNotifier do
   end
 
   defp deliver_magic_link_instructions(user, url) do
-    deliver(user.email, "Log in instructions", """
-
-    ==============================
+    subject = "Login to Your BlindRestoration Account"
+    
+    text_body = """
+    Login to Your Account
 
     Hi #{user.email},
 
@@ -61,24 +100,43 @@ defmodule BlindShop.Accounts.UserNotifier do
 
     If you didn't request this email, please ignore this.
 
-    ==============================
-    """)
+    Best regards,
+    The BlindRestoration Team
+    """
+
+    html_body = render_template("login_instructions", %{
+      user: user,
+      url: url,
+      subject: subject
+    })
+
+    deliver(user.email, subject, text_body, html_body)
   end
 
   defp deliver_confirmation_instructions(user, url) do
-    deliver(user.email, "Confirmation instructions", """
-
-    ==============================
+    subject = "Welcome to BlindRestoration - Confirm Your Account"
+    
+    text_body = """
+    Welcome to BlindRestoration!
 
     Hi #{user.email},
 
-    You can confirm your account by visiting the URL below:
+    Thank you for creating an account! Please confirm your account by visiting the URL below:
 
     #{url}
 
     If you didn't create an account with us, please ignore this.
 
-    ==============================
-    """)
+    Best regards,
+    The BlindRestoration Team
+    """
+
+    html_body = render_template("confirmation_instructions", %{
+      user: user,
+      url: url,
+      subject: subject
+    })
+
+    deliver(user.email, subject, text_body, html_body)
   end
 end

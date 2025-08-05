@@ -124,7 +124,7 @@ defmodule SharedViews do
             <.icon name="hero-bars-3" class="h-6 w-6" />
           </button>
         </div>
-        
+
     <!-- Mobile menu, show/hide based on menu state. -->
         <div
           id="mobile-menu"
@@ -155,9 +155,6 @@ defmodule SharedViews do
 
               <div class="mt-6">
                 <nav class="grid grid-cols-1 gap-2">
-                  <div class="mb-4">
-                    <.theme_toggle />
-                  </div>
                   <%= if @current_scope && Map.has_key?(@current_scope, :user) do %>
                     <.link href="/users/log-out" method="delete" class="nav-link">
                       <.icon name="hero-arrow-right-start-on-rectangle" class="h-5 w-5" /> {gettext(

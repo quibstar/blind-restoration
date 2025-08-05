@@ -8,7 +8,19 @@
     <h3 style="margin-top: 0; color: #2e7d32;">📦 Shipped!</h3>
     <p><strong>Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %></strong></p>
     <%= if @order.tracking_number do %>
-        <p><strong>Tracking Number:</strong> <%= @order.tracking_number %></p>
+        <%= if @order.carrier do %>
+            <p><strong><%= String.upcase(@order.carrier) %> Tracking Number:</strong> <%= @order.tracking_number %></p>
+            <p style="text-align: center; margin: 15px 0;">
+                <a href="<%= get_tracking_url(@order.carrier, @order.tracking_number) %>" 
+                   class="button button-primary" 
+                   target="_blank" 
+                   style="text-decoration: none;">
+                    Track Your Package →
+                </a>
+            </p>
+        <% else %>
+            <p><strong>Tracking Number:</strong> <%= @order.tracking_number %></p>
+        <% end %>
     <% else %>
         <p>Tracking information will be updated soon.</p>
     <% end %>

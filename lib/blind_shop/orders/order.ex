@@ -11,7 +11,7 @@ defmodule BlindShop.Orders.Order do
     field :total_price, :decimal
     field :status, :string, default: "pending"
     field :tracking_number, :string
-    field :shipping_label_url, :string
+    field :carrier, :string
     field :notes, :string
     field :shipped_at, :utc_datetime
     field :completed_at, :utc_datetime
@@ -47,6 +47,9 @@ defmodule BlindShop.Orders.Order do
     # Invoice line items for flexible billing
     has_many :invoice_line_items, InvoiceLineItem, preload_order: [:line_order]
     
+    # Order notes for tracking communication and status
+    has_many :order_notes, BlindShop.Orders.OrderNote, preload_order: [:inserted_at]
+    
     belongs_to :user, BlindShop.Accounts.User
 
     timestamps(type: :utc_datetime)
@@ -60,7 +63,7 @@ defmodule BlindShop.Orders.Order do
   def changeset(order, attrs) do
     changeset = 
       order
-      |> cast(attrs, [:service_level, :volume_discount, :total_price, :status, :tracking_number, :shipping_label_url, 
+      |> cast(attrs, [:service_level, :volume_discount, :total_price, :status, :tracking_number, :carrier,
                       :notes, :shipped_at, :completed_at, :user_id,
                       :checkout_session_id, :payment_intent_id, :payment_status, :paid_at,
                       :invoice_sent_at, :invoice_id, :repair_completed_at, :received_at, :assessed_at,

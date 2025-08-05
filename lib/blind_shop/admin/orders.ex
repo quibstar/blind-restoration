@@ -6,7 +6,7 @@ defmodule BlindShop.Admin.Orders do
   import Ecto.Query, warn: false
   alias BlindShop.Repo
 
-  alias BlindShop.Orders.Order
+  alias BlindShop.Orders.{Order, OrderNote}
   alias BlindShop.Accounts.Scope
   alias BlindShop.Workers.OrderEmailWorker
 
@@ -27,7 +27,7 @@ defmodule BlindShop.Admin.Orders do
   """
   def get_order!(id) do
     Order
-    |> preload([:user, :order_line_items])
+    |> preload([:user, :order_line_items, order_notes: [:admin]])
     |> Repo.get!(id)
   end
 
@@ -173,5 +173,46 @@ defmodule BlindShop.Admin.Orders do
   """
   def update_order_notes(%Order{} = order, notes) do
     update_order(order, %{notes: notes})
+  end
+
+  ## Order Notes Functions
+
+  @doc """
+  Creates a new order note.
+  """
+  def create_order_note(%Order{} = order, admin, attrs) do
+    %OrderNote{}
+    |> OrderNote.changeset(Map.merge(attrs, %{
+      "order_id" => order.id,
+      "admin_id" => admin.id
+    }))
+    |> Repo.insert()
+  end
+
+  @doc """
+  Gets all notes for an order, ordered by newest first.
+  """
+  def list_order_notes(%Order{} = order) do
+    OrderNote
+    |> where([n], n.order_id == ^order.id)
+    |> preload([:admin])
+    |> order_by([n], desc: n.inserted_at)
+    |> Repo.all()
+  end
+
+  @doc """
+  Updates an existing order note.
+  """
+  def update_order_note(%OrderNote{} = order_note, attrs) do
+    order_note
+    |> OrderNote.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Creates a changeset for an order note.
+  """
+  def change_order_note(%OrderNote{} = order_note, attrs \\ %{}) do
+    OrderNote.changeset(order_note, attrs)
   end
 end

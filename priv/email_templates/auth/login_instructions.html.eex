@@ -1,0 +1,29 @@
+<h2 style="color: #333; margin-bottom: 20px;">Login to Your Account</h2>
+
+<p>Hi there,</p>
+
+<p>You requested to log into your BlindRestoration account. Click the button below to securely access your dashboard:</p>
+
+<p style="text-align: center; margin: 30px 0;">
+    <a href="<%= @url %>" class="button button-primary">Log In to Dashboard</a>
+</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0;">What you can do in your dashboard:</h3>
+    <ul>
+        <li>Track your blind repair orders</li>
+        <li>View order history and invoices</li>
+        <li>Get instant quotes for new repairs</li>
+        <li>Access shipping instructions</li>
+        <li>Update your account settings</li>
+    </ul>
+</div>
+
+<p>This login link will expire in 1 hour for security reasons.</p>
+
+<div class="info-box">
+    <p><strong>Security Note:</strong> If you didn't request this login link, please ignore this email. Your account remains secure.</p>
+</div>
+
+<p>Best regards,<br>
+The BlindRestoration Team</p>

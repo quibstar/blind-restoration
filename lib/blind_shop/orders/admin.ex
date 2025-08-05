@@ -38,10 +38,10 @@ defmodule BlindShop.Orders.Admin do
   @doc """
   Updates order with tracking information
   """
-  def update_tracking_info(%Order{} = order, tracking_number, shipping_label_url \\ nil) do
+  def update_tracking_info(%Order{} = order, tracking_number, carrier \\ nil) do
     attrs = %{
       tracking_number: tracking_number,
-      shipping_label_url: shipping_label_url,
+      carrier: carrier,
       shipped_at: DateTime.utc_now()
     }
     

@@ -49,19 +49,6 @@ defmodule BlindShopWeb.DashboardLive do
     |> assign(:total_spent, total_spent)
   end
 
-  @impl true
-  def handle_event("download_label", %{"order_id" => order_id}, socket) do
-    order = Orders.get_order!(socket.assigns.current_scope, order_id)
-
-    # In a real app, you'd generate or fetch the actual shipping label
-    # For now, we'll show a message
-    {:noreply,
-     socket
-     |> put_flash(
-       :info,
-       "Shipping label for order ##{String.pad_leading(to_string(order.id), 6, "0")} will be emailed to you shortly."
-     )}
-  end
 
   @impl true
   def render(assigns) do
@@ -224,7 +211,7 @@ defmodule BlindShopWeb.DashboardLive do
               </svg>
               Shipping Guide
             </.link>
-            <a href="mailto:support@blindshop.com" class="btn btn-outline">
+            <a href="mailto:support@blindrestoration.com" class="btn btn-outline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 mr-2"
@@ -430,8 +417,18 @@ defmodule BlindShopWeb.DashboardLive do
                           <% end %>
                           <%= if order.tracking_number do %>
                             <div class="text-xs mt-1">
-                              <span class="text-base-content/60">Tracking:</span>
-                              <span class="font-mono">{order.tracking_number}</span>
+                              <span class="text-base-content/60">
+                                <%= if order.carrier, do: "#{String.upcase(order.carrier)} ", else: "" %>Tracking:
+                              </span>
+                              <%= if order.carrier do %>
+                                <a href={get_tracking_url(order.carrier, order.tracking_number)} 
+                                   target="_blank" 
+                                   class="font-mono link link-primary">
+                                  {order.tracking_number}
+                                </a>
+                              <% else %>
+                                <span class="font-mono">{order.tracking_number}</span>
+                              <% end %>
                             </div>
                           <% end %>
                         </td>
@@ -443,15 +440,6 @@ defmodule BlindShopWeb.DashboardLive do
                             <.link navigate={~p"/orders/#{order}"} class="btn btn-ghost btn-xs">
                               View
                             </.link>
-                            <%= if order.status == "pending" do %>
-                              <button
-                                phx-click="download_label"
-                                phx-value-order_id={order.id}
-                                class="btn btn-primary btn-xs"
-                              >
-                                Label
-                              </button>
-                            <% end %>
                           </div>
                         </td>
                       </tr>
@@ -488,7 +476,7 @@ defmodule BlindShopWeb.DashboardLive do
               <.link navigate={~p"/shipping-instructions"} class="link link-info">
                 shipping instructions
               </.link>
-              or <a href="mailto:support@blindshop.com" class="link link-info">contact support</a>
+              or <a href="mailto:support@blindrestoration.com" class="link link-info">contact support</a>
               if you have any questions.
             </p>
           </div>
@@ -545,4 +533,16 @@ defmodule BlindShopWeb.DashboardLive do
       _ -> String.capitalize(blind_type || "Unknown")
     end
   end
+
+  # Generate tracking URL for different carriers
+  defp get_tracking_url(carrier, tracking_number) when is_binary(carrier) and is_binary(tracking_number) do
+    case String.downcase(carrier) do
+      "ups" -> "https://www.ups.com/track?track=yes&trackNums=#{tracking_number}"
+      "fedex" -> "https://www.fedex.com/fedextrack/?trknbr=#{tracking_number}"
+      "usps" -> "https://tools.usps.com/go/TrackConfirmAction?tLabels=#{tracking_number}"
+      "dhl" -> "https://www.dhl.com/us-en/home/tracking.html?tracking-id=#{tracking_number}"
+      _ -> "https://www.google.com/search?q=track+package+#{tracking_number}"
+    end
+  end
+  defp get_tracking_url(_, _), do: ""
 end

@@ -40,6 +40,7 @@ defmodule BlindShopWeb.Router do
     get "/shipping-instructions", PageController, :shipping_instructions
     get "/terms-of-service", PageController, :terms_of_service
     get "/privacy-policy", PageController, :privacy_policy
+    get "/sitemap.xml", SitemapController, :index
   end
 
   # Stripe webhook endpoint (no authentication needed)
