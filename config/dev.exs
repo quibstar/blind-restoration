@@ -88,15 +88,3 @@ config :swoosh, :api_client, false
 
 # Configure Swoosh mailer for development
 config :blind_shop, BlindShop.Mailer, adapter: Swoosh.Adapters.Local
-
-# Configure Stripe for development
-config :stripity_stripe,
-  api_key:
-    System.get_env("STRIPE_SECRET_KEY") ||
-      "sk_test_51Rs4qzDDPon0eSwTm8XJ43MRUBpe1YVLdE74LxNXuqg6pcFM15PN7StnehxzLIilpNG1rVgJ4SK6SZlxkcAH5Swf006h0S2sPF",
-  publishable_key:
-    System.get_env("STRIPE_PUBLISHABLE_KEY") ||
-      "pk_test_51Rs4qzDDPon0eSwThajmeHYAkNRpaWQYD9NoLg2arMdkRsq10CTYAvcFDeqzftfIrtRg4gaG07unDO56KqBIwS7500OdDgtQq1",
-  webhook_secret:
-    System.get_env("STRIPE_WEBHOOK_SECRET") ||
-      "whsec_a752409725f356301bce5d34c55701997b9dc74a720c615be6ad8cc961e313ab"
