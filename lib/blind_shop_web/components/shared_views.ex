@@ -20,8 +20,11 @@ defmodule SharedViews do
           navigate={if @current_scope, do: "/dashboard", else: "/"}
           class="text-xl font-bold logo-color flex items-center"
         >
-          <img src={~p"/images/logo.png"} alt="Logo" class="inline-block h-12 w-auto ml-2 rounded-lg" />
-          BlindRestoration.com
+          <img
+            src={~p"/images/logo.webp"}
+            alt="Logo"
+            class="inline-block h-12 w-auto ml-2 rounded-lg"
+          /> BlindRestoration.com
         </.link>
         <ul class="relative z-10 hidden md:flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
           <%= if @current_scope && Map.has_key?(@current_scope, :user) && @current_scope.user do %>
@@ -124,7 +127,7 @@ defmodule SharedViews do
             <.icon name="hero-bars-3" class="h-6 w-6" />
           </button>
         </div>
-
+        
     <!-- Mobile menu, show/hide based on menu state. -->
         <div
           id="mobile-menu"
@@ -135,7 +138,7 @@ defmodule SharedViews do
               <div class="flex items-center justify-between -ml-4">
                 <.link navigate="/" class="text-xl font-bold logo-color flex items-center">
                   <img
-                    src={~p"/images/logo.png"}
+                    src={~p"/images/logo.webp"}
                     alt="Logo"
                     class="inline-block h-12 w-auto ml-2 rounded-lg"
                   /> BlindRestoration.com

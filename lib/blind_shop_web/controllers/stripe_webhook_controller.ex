@@ -4,7 +4,6 @@ defmodule BlindShopWeb.StripeWebhookController do
   alias BlindShop.Orders
   alias BlindShop.Accounts
   alias BlindShop.Payments.StripeService
-  alias BlindShop.Workers.OrderEmailWorker
 
   require Logger
 
@@ -25,7 +24,7 @@ defmodule BlindShopWeb.StripeWebhookController do
   defp get_stripe_event(conn) do
     payload = conn.assigns.raw_body || get_raw_body(conn)
     signature = get_req_header(conn, "stripe-signature") |> List.first()
-    
+
     case Stripe.Webhook.construct_event(payload, signature, webhook_secret()) do
       {:ok, event} -> {:ok, event}
       {:error, reason} -> {:error, reason}
@@ -39,11 +38,11 @@ defmodule BlindShopWeb.StripeWebhookController do
 
   defp handle_stripe_event(%{type: "checkout.session.completed"} = event) do
     session = event.data.object
-    
+
     case StripeService.decode_order_data(session.metadata) do
       {:ok, order_data} ->
         create_order_from_payment(session, order_data)
-        
+
       {:error, reason} ->
         Logger.error("Failed to decode order data: #{inspect(reason)}")
         {:error, reason}
@@ -57,24 +56,26 @@ defmodule BlindShopWeb.StripeWebhookController do
 
   defp create_order_from_payment(session, order_data) do
     user_id = order_data["user_id"]
-    
-    case Accounts.get_user(user_id) do
+
+    case Accounts.get_user!(user_id) do
       nil ->
         Logger.error("User not found: #{user_id}")
         {:error, "User not found"}
-        
+
       user ->
         scope = %BlindShop.Accounts.Scope{user: user}
-        
+
         # Add payment fields to order data
-        order_attrs = Map.merge(order_data, %{
-          "checkout_session_id" => session.id,
-          "payment_intent_id" => session.payment_intent,
-          "payment_status" => "paid",
-          "paid_at" => DateTime.utc_now(),
-          "status" => "pending"  # Order starts as pending after payment
-        })
-        
+        order_attrs =
+          Map.merge(order_data, %{
+            "checkout_session_id" => session.id,
+            "payment_intent_id" => session.payment_intent,
+            "payment_status" => "paid",
+            "paid_at" => DateTime.utc_now(),
+            # Order starts as pending after payment
+            "status" => "pending"
+          })
+
         # Check if order already exists (for idempotency)
         case find_existing_order(session.id) do
           nil ->
@@ -83,12 +84,12 @@ defmodule BlindShopWeb.StripeWebhookController do
                 Logger.info("Order created successfully: #{order.id}")
                 # Order confirmation email is sent automatically by create_order
                 :ok
-                
+
               {:error, changeset} ->
                 Logger.error("Failed to create order: #{inspect(changeset)}")
                 {:error, "Failed to create order"}
             end
-            
+
           _existing_order ->
             Logger.info("Order already exists for session: #{session.id}")
             :ok
