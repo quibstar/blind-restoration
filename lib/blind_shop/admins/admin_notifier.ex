@@ -1,11 +1,14 @@
 defmodule BlindShop.Admins.AdminNotifier do
   import Swoosh.Email
+  require Logger
 
   alias BlindShop.Mailer
   alias BlindShop.Admins.Admin
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do
+    Logger.info("Attempting to send email to: #{recipient}, subject: #{subject}")
+
     email =
       new()
       |> to(recipient)
@@ -13,8 +16,18 @@ defmodule BlindShop.Admins.AdminNotifier do
       |> subject(subject)
       |> text_body(body)
 
-    with {:ok, _metadata} <- Mailer.deliver(email) do
-      {:ok, email}
+    case Mailer.deliver(email) do
+      {:ok, metadata} ->
+        Logger.info("Email sent successfully: #{inspect(metadata)}")
+        {:ok, email}
+
+      {:error, reason} ->
+        Logger.error("Failed to send email: #{inspect(reason)}")
+        {:error, reason}
+
+      result ->
+        Logger.warning("Unexpected email delivery result: #{inspect(result)}")
+        result
     end
   end
 

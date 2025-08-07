@@ -1,6 +1,7 @@
 defmodule BlindShopWeb.AdminLive.Login do
   use BlindShopWeb, :live_view
 
+  require Logger
   alias BlindShop.Admins
 
   def render(assigns) do
@@ -106,11 +107,25 @@ defmodule BlindShopWeb.AdminLive.Login do
   end
 
   def handle_event("submit_magic", %{"admin" => %{"email" => email}}, socket) do
-    if admin = Admins.get_admin_by_email(email) do
-      Admins.deliver_login_instructions(
-        admin,
-        &url(~p"/admins/log-in/#{&1}")
-      )
+    Logger.info("Magic login attempt for email: #{email}")
+
+    case Admins.get_admin_by_email(email) do
+      nil ->
+        Logger.warning("No admin found for email: #{email}")
+
+      admin ->
+        Logger.info("Admin found: #{admin.id}, sending login instructions...")
+
+        case Admins.deliver_login_instructions(admin, &url(~p"/admins/log-in/#{&1}")) do
+          {:ok, result} ->
+            Logger.info("Login instructions sent successfully: #{inspect(result)}")
+
+          {:error, reason} ->
+            Logger.error("Failed to send login instructions: #{inspect(reason)}")
+
+          result ->
+            Logger.info("Login instructions result: #{inspect(result)}")
+        end
     end
 
     info =
