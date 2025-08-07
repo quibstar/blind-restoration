@@ -23,7 +23,7 @@ config :blind_shop, BlindShopWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "A1kzHNtvZlUHBF0iR4InD0ErNtLcznpze7UcTBuGfwfe/ykzcHjSzz4ncmnnS03c",
+  # secret_key_base: "A1kzHNtvZlUHBF0iR4InD0ErNtLcznpze7UcTBuGfwfe/ykzcHjSzz4ncmnnS03c",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:blind_shop, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:blind_shop, ~w(--watch)]}
@@ -88,3 +88,7 @@ config :swoosh, :api_client, false
 
 # Configure Swoosh mailer for development
 config :blind_shop, BlindShop.Mailer, adapter: Swoosh.Adapters.Local
+
+if File.exists?("config/dev.secrets.exs") do
+  import_config "dev.secrets.exs"
+end
