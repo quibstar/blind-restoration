@@ -292,10 +292,29 @@ defmodule BlindShopWeb.OrderLive.Show do
             <h3 class="card-title">What's Next?</h3>
             <%= case @order.status do %>
               <% "pending" -> %>
-                <p>Time to ship your blinds! Follow our shipping instructions to send them to us.</p>
+                <p>Time to ship your blinds! Send them to our repair facility:</p>
+                <div class="alert alert-info mt-4">
+                  <div>
+                    <h4 class="font-bold">Ship To:</h4>
+                    <div class="mt-2">
+                      <p class="font-semibold">Blind Restoration</p>
+                      <p>11034 Island CT.</p>
+                      <p>Allendale, MI 49401</p>
+                    </div>
+                    <div class="mt-3">
+                      <p class="text-sm">
+                        <strong>Reference:</strong>
+                        Order #{String.pad_leading(to_string(@order.id), 6, "0")}
+                      </p>
+                      <p class="text-sm text-base-content/70">
+                        Please include this order number on your package
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 <div class="card-actions justify-start mt-4">
                   <.link navigate={~p"/shipping-instructions"} class="btn btn-primary">
-                    View Shipping Instructions
+                    View Detailed Shipping Instructions
                   </.link>
                 </div>
               <% "processing" -> %>

@@ -80,9 +80,9 @@ defmodule BlindShopWeb.Emails.OrderEmail do
     4. We'll notify you when we receive and complete your repair
 
     Ship To:
-    BlindShop Repair Center
-    123 Repair Lane, Suite 100
-    Phoenix, AZ 85001
+    Blind Restoration
+    11034 Island CT.
+    Allendale, MI 49401
 
     Include Order ##{String.pad_leading(to_string(order.id), 6, "0")} on package
 
@@ -297,9 +297,9 @@ defmodule BlindShopWeb.Emails.OrderEmail do
 
     To get your blinds repaired, please ship them to:
 
-    BlindShop Repair Center
-    123 Repair Lane, Suite 100
-    Phoenix, AZ 85001
+    Blind Restoration
+    11034 Island CT.
+    Allendale, MI 49401
 
     Don't forget to include your order number on the package!
 

@@ -86,10 +86,11 @@ defmodule BlindShopWeb.AdminLive.Reports do
 
     # Blind type popularity
     blind_type_stats =
-      Orders.Order
-      |> where([o], o.inserted_at >= ^start_date)
-      |> group_by([o], o.blind_type)
-      |> select([o], {o.blind_type, count(o.id), sum(o.total_price)})
+      Orders.OrderLineItem
+      |> join(:inner, [oli], o in Orders.Order, on: oli.order_id == o.id)
+      |> where([oli, o], o.inserted_at >= ^start_date)
+      |> group_by([oli], oli.blind_type)
+      |> select([oli, o], {oli.blind_type, count(oli.id), sum(o.total_price)})
       |> Repo.all()
       |> Enum.map(fn {type, count, revenue} ->
         %{type: type, count: count, revenue: revenue || Decimal.new(0)}

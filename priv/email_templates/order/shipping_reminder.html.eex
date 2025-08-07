@@ -25,9 +25,9 @@
 <div class="info-box">
     <h3 style="margin-top: 0;">📍 Ship Your Blinds To:</h3>
     <p style="font-size: 18px; margin: 10px 0;">
-        <strong>BlindShop Repair Center</strong><br>
-        123 Repair Lane, Suite 100<br>
-        Phoenix, AZ 85001
+        <strong>Blind Restoration</strong><br>
+        11034 Island CT.<br>
+        Allendale, MI 49401
     </p>
     <div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 15px;">
         <strong>Important:</strong> Include Order #<%= String.pad_leading(to_string(@order.id), 6, "0") %> on the package

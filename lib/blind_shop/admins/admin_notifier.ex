@@ -9,12 +9,18 @@ defmodule BlindShop.Admins.AdminNotifier do
   defp deliver(recipient, subject, body) do
     Logger.info("Attempting to send email to: #{recipient}, subject: #{subject}")
 
+    # Log the mailer configuration
+    mailer_config = Application.get_env(:blind_shop, BlindShop.Mailer, [])
+    Logger.info("Mailer adapter: #{inspect(mailer_config[:adapter])}")
+
     email =
       new()
       |> to(recipient)
       |> from({"BlindShop", "support@blindrestoration.com"})
       |> subject(subject)
       |> text_body(body)
+
+    Logger.info("Email struct created: #{inspect(email)}")
 
     case Mailer.deliver(email) do
       {:ok, metadata} ->
