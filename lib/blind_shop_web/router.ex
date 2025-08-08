@@ -40,16 +40,17 @@ defmodule BlindShopWeb.Router do
     get "/shipping-instructions", PageController, :shipping_instructions
     get "/terms-of-service", PageController, :terms_of_service
     get "/privacy-policy", PageController, :privacy_policy
+    live "/contact", ContactLive, :index
     get "/sitemap.xml", SitemapController, :index
   end
 
   # Stripe webhook endpoint (no authentication needed)
   scope "/webhooks", BlindShopWeb do
     pipe_through :stripe_webhook
-    
+
     post "/stripe", StripeWebhookController, :handle
   end
-  
+
   # Other scopes may use custom stacks.
   # scope "/api", BlindShopWeb do
   #   pipe_through :api
@@ -122,6 +123,8 @@ defmodule BlindShopWeb.Router do
       live "/admin/orders/:id/invoice", AdminLive.InvoiceForm, :new
       live "/admin/orders/:id", AdminLive.OrderDetail, :show
       live "/admin/customers", AdminLive.Customers, :index
+      live "/admin/contact-inquiries", AdminLive.ContactInquiries, :index
+      live "/admin/contact-inquiries/:id", AdminLive.ContactInquiryDetail, :show
       live "/admin/reports", AdminLive.Reports, :index
       live "/admins/settings", AdminLive.Settings, :edit
       live "/admins/settings/confirm-email/:token", AdminLive.Settings, :confirm_email

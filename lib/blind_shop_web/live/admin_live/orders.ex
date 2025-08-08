@@ -2,8 +2,6 @@ defmodule BlindShopWeb.AdminLive.Orders do
   use BlindShopWeb, :live_view
 
   alias BlindShop.Admin.Orders, as: AdminOrders
-  alias BlindShop.Repo
-  import Ecto.Query
 
   @impl true
   def mount(_params, _session, socket) do
@@ -90,7 +88,7 @@ defmodule BlindShopWeb.AdminLive.Orders do
         </div>
         
     <!-- Stats Summary -->
-        <div class="stats shadow mb-6">
+        <div class="stats shadow mb-6 bg-base-100">
           <div class="stat">
             <div class="stat-title">Total Orders</div>
             <div class="stat-value text-primary">{length(@orders)}</div>

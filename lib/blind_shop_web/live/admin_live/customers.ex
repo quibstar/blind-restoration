@@ -34,7 +34,8 @@ defmodule BlindShopWeb.AdminLive.Customers do
   def handle_event("search", %{"search" => %{"query" => query}}, socket) do
     {:noreply,
      push_patch(socket,
-       to: ~p"/admin/customers?search=#{query}&sort_by=#{socket.assigns.sort_by}&sort_order=#{socket.assigns.sort_order}"
+       to:
+         ~p"/admin/customers?search=#{query}&sort_by=#{socket.assigns.sort_by}&sort_order=#{socket.assigns.sort_order}"
      )}
   end
 
@@ -49,7 +50,8 @@ defmodule BlindShopWeb.AdminLive.Customers do
 
     {:noreply,
      push_patch(socket,
-       to: ~p"/admin/customers?search=#{socket.assigns.search_query}&sort_by=#{field}&sort_order=#{sort_order}"
+       to:
+         ~p"/admin/customers?search=#{socket.assigns.search_query}&sort_by=#{field}&sort_order=#{sort_order}"
      )}
   end
 
@@ -64,12 +66,13 @@ defmodule BlindShopWeb.AdminLive.Customers do
     customers_with_stats =
       Enum.map(customers, fn customer ->
         order_count = length(customer.orders)
-        total_spent = 
+
+        total_spent =
           customer.orders
           |> Enum.map(& &1.total_price)
           |> Enum.reduce(Decimal.new(0), &Decimal.add/2)
-        
-        last_order = 
+
+        last_order =
           customer.orders
           |> Enum.sort_by(& &1.inserted_at, {:desc, DateTime})
           |> List.first()
@@ -138,9 +141,9 @@ defmodule BlindShopWeb.AdminLive.Customers do
           <h1 class="text-3xl font-bold text-base-content">Customer Management</h1>
           <p class="text-base-content/70 mt-2">View and manage customer information</p>
         </div>
-
-        <!-- Stats Summary -->
-        <div class="stats shadow mb-6">
+        
+    <!-- Stats Summary -->
+        <div class="stats shadow mb-6 bg-base-100">
           <div class="stat">
             <div class="stat-figure text-primary">
               <.icon name="hero-user-group" class="w-8 h-8" />
@@ -167,20 +170,18 @@ defmodule BlindShopWeb.AdminLive.Customers do
             </div>
             <div class="stat-title">Average Orders</div>
             <div class="stat-value text-info">
-              {
-                if length(@customers) > 0 do
-                  total_orders = @customers |> Enum.map(& &1.order_count) |> Enum.sum()
-                  (total_orders / length(@customers)) |> Float.round(1)
-                else
-                  0
-                end
-              }
+              {if length(@customers) > 0 do
+                total_orders = @customers |> Enum.map(& &1.order_count) |> Enum.sum()
+                (total_orders / length(@customers)) |> Float.round(1)
+              else
+                0
+              end}
             </div>
             <div class="stat-desc">Per customer</div>
           </div>
         </div>
-
-        <!-- Search and Filters -->
+        
+    <!-- Search and Filters -->
         <div class="card bg-base-100 shadow mb-6">
           <div class="card-body">
             <div class="flex flex-col sm:flex-row gap-4">
@@ -198,19 +199,18 @@ defmodule BlindShopWeb.AdminLive.Customers do
                   </button>
                 </label>
               </.form>
-
-              <!-- Clear Search -->
+              
+    <!-- Clear Search -->
               <%= if @search_query != "" do %>
                 <.link navigate={~p"/admin/customers"} class="btn btn-outline">
-                  <.icon name="hero-x-mark" class="w-4 h-4" />
-                  Clear Search
+                  <.icon name="hero-x-mark" class="w-4 h-4" /> Clear Search
                 </.link>
               <% end %>
             </div>
           </div>
         </div>
-
-        <!-- Customers Table -->
+        
+    <!-- Customers Table -->
         <div class="card bg-base-100 shadow">
           <div class="card-body">
             <div class="overflow-x-auto">
@@ -223,8 +223,7 @@ defmodule BlindShopWeb.AdminLive.Customers do
                         phx-value-field="first_name"
                         class="btn btn-ghost btn-sm flex items-center gap-1"
                       >
-                        Customer
-                        {sort_icon(@sort_by, @sort_order, "first_name")}
+                        Customer {sort_icon(@sort_by, @sort_order, "first_name")}
                       </button>
                     </th>
                     <th>
@@ -233,8 +232,7 @@ defmodule BlindShopWeb.AdminLive.Customers do
                         phx-value-field="email"
                         class="btn btn-ghost btn-sm flex items-center gap-1"
                       >
-                        Email
-                        {sort_icon(@sort_by, @sort_order, "email")}
+                        Email {sort_icon(@sort_by, @sort_order, "email")}
                       </button>
                     </th>
                     <th>Orders</th>
@@ -245,8 +243,7 @@ defmodule BlindShopWeb.AdminLive.Customers do
                         phx-value-field="inserted_at"
                         class="btn btn-ghost btn-sm flex items-center gap-1"
                       >
-                        Joined
-                        {sort_icon(@sort_by, @sort_order, "inserted_at")}
+                        Joined {sort_icon(@sort_by, @sort_order, "inserted_at")}
                       </button>
                     </th>
                     <th>Last Order</th>
@@ -264,7 +261,9 @@ defmodule BlindShopWeb.AdminLive.Customers do
                             <p class="text-base-content/50">Try adjusting your search criteria.</p>
                           <% else %>
                             <p class="text-lg font-medium mb-2">No customers yet</p>
-                            <p class="text-base-content/50">Customers will appear here when they register.</p>
+                            <p class="text-base-content/50">
+                              Customers will appear here when they register.
+                            </p>
                           <% end %>
                         </div>
                       </td>
@@ -359,18 +358,21 @@ defmodule BlindShopWeb.AdminLive.Customers do
     cond do
       current_sort == field and current_order == "asc" ->
         assigns = %{}
+
         ~H"""
         <.icon name="hero-chevron-up" class="w-4 h-4" />
         """
 
       current_sort == field and current_order == "desc" ->
         assigns = %{}
+
         ~H"""
         <.icon name="hero-chevron-down" class="w-4 h-4" />
         """
 
       true ->
         assigns = %{}
+
         ~H"""
         <.icon name="hero-chevron-up-down" class="w-4 h-4 opacity-30" />
         """

@@ -2,6 +2,7 @@ defmodule BlindShopWeb.AdminLive.Dashboard do
   use BlindShopWeb, :live_view
 
   alias BlindShop.Orders
+  alias BlindShop.Contacts
   alias BlindShop.Repo
   import Ecto.Query
 
@@ -76,6 +77,9 @@ defmodule BlindShopWeb.AdminLive.Dashboard do
       |> Repo.all()
       |> Repo.preload(:user)
 
+    # Contact inquiry stats
+    contact_stats = Contacts.get_contact_stats()
+
     socket
     |> assign(:total_orders, total_orders)
     |> assign(:pending_orders, pending_orders)
@@ -86,6 +90,7 @@ defmodule BlindShopWeb.AdminLive.Dashboard do
     |> assign(:monthly_revenue, monthly_revenue)
     |> assign(:recent_orders, recent_orders)
     |> assign(:overdue_orders, overdue_orders)
+    |> assign(:contact_stats, contact_stats)
   end
 
   defp beginning_of_month do
@@ -200,9 +205,66 @@ defmodule BlindShopWeb.AdminLive.Dashboard do
             <div class="stat-value text-success">${@monthly_revenue}</div>
             <div class="stat-desc">Total: ${@total_revenue}</div>
           </div>
+
+          <div class="stat bg-base-100">
+            <div class="stat-figure text-secondary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                class="w-8 h-8 stroke-current"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                >
+                </path>
+              </svg>
+            </div>
+            <div class="stat-title">Contact Inquiries</div>
+            <div class="stat-value text-secondary">{@contact_stats.pending}</div>
+            <div class="stat-desc">
+              <span class="text-success">{@contact_stats.today} today</span>
+              • <span class="text-info">{@contact_stats.total} total</span>
+            </div>
+          </div>
         </div>
         
     <!-- Action Items -->
+        <%= if @contact_stats.pending > 0 do %>
+          <div role="alert" class="alert alert-info mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
+            <div>
+              <h3 class="font-bold">New Contact Inquiries</h3>
+              <div class="text-xs">
+                <strong>{@contact_stats.pending} inquiries</strong> are waiting for response.
+              </div>
+            </div>
+            <div>
+              <.link
+                navigate={~p"/admin/contact-inquiries?status=pending"}
+                class="btn btn-sm btn-info"
+              >
+                View Inquiries
+              </.link>
+            </div>
+          </div>
+        <% end %>
+
         <%= if length(@overdue_orders) > 0 do %>
           <div role="alert" class="alert alert-warning mb-8">
             <svg

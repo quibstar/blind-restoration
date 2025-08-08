@@ -70,6 +70,7 @@ defmodule SharedViews do
             <li><.link navigate={~p"/admin/dashboard"} class="btn btn-ghost">Dashboard</.link></li>
             <li><.link navigate={~p"/admin/orders"} class="btn btn-ghost">Orders</.link></li>
             <li><.link navigate={~p"/admin/customers"} class="btn btn-ghost">Customers</.link></li>
+            <li><.link navigate={~p"/admin/contact-inquiries"} class="btn btn-ghost">Contact Inquiries</.link></li>
             <li><.link navigate={~p"/admin/reports"} class="btn btn-ghost">Reports</.link></li>
 
             <div class="dropdown dropdown-end">

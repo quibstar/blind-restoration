@@ -151,31 +151,35 @@
               <div class="form-control">
                 <fieldset class="space-y-2" id="service-levels">
                   <legend class="label-text text-lg font-semibold mb-2">Service Level</legend>
+                  <div class="text-xs text-base-content/60 mb-2">
+                    * Times shown are for repair only. Add 3-7 days each way for shipping. 
+                    <a href="/terms-of-service#turnaround" class="link link-primary">See details</a>
+                  </div>
                   <label class="label cursor-pointer justify-start gap-4" for="service-standard">
                     <input type="radio" name="service-level" id="service-standard" value="standard" class="radio radio-primary" checked aria-describedby="standard-desc" />
                     <div class="flex-1">
-                      <span class="font-semibold">Standard (7-10 days)</span>
+                      <span class="font-semibold">Standard (7-10 repair days)</span>
                       <span class="text-sm text-base-content/60 block" id="standard-desc">Base price</span>
                     </div>
                   </label>
                   <label class="label cursor-pointer justify-start gap-4" for="service-rush">
                     <input type="radio" name="service-level" id="service-rush" value="rush" class="radio radio-primary" aria-describedby="rush-desc" />
                     <div class="flex-1">
-                      <span class="font-semibold">Rush (5 days)</span>
+                      <span class="font-semibold">Rush (5 repair days)</span>
                       <span class="text-sm text-base-content/60 block" id="rush-desc">+25% additional charge</span>
                     </div>
                   </label>
                   <label class="label cursor-pointer justify-start gap-4" id="priority-option" for="service-priority">
                     <input type="radio" name="service-level" id="service-priority" value="priority" class="radio radio-primary" aria-describedby="priority-desc" />
                     <div class="flex-1">
-                      <span class="font-semibold">Priority (3 days)</span>
+                      <span class="font-semibold">Priority (3 repair days)</span>
                       <span class="text-sm text-base-content/60 block" id="priority-desc">+50% additional charge</span>
                     </div>
                   </label>
                   <label class="label cursor-pointer justify-start gap-4" id="express-option" for="service-express">
                     <input type="radio" name="service-level" id="service-express" value="express" class="radio radio-primary" aria-describedby="express-desc" />
                     <div class="flex-1">
-                      <span class="font-semibold">Express (2 days)</span>
+                      <span class="font-semibold">Express (2 repair days)</span>
                       <span class="text-sm text-base-content/60 block" id="express-desc">+75% additional charge (Only for &lt;5 blinds with in-stock cords)</span>
                     </div>
                   </label>
