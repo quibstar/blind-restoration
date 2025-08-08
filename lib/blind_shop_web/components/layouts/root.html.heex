@@ -26,15 +26,17 @@
     <!-- Canonical URL -->
     <link rel="canonical" href={assigns[:canonical_url] || "https://blindrestoration.com"} />
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-97LW5CT0RN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <%= if Mix.env() == :prod do %>
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-97LW5CT0RN"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-      gtag('config', 'G-97LW5CT0RN');
-    </script>
+        gtag('config', 'G-97LW5CT0RN');
+      </script>
+    <% end %>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
