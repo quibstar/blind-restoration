@@ -88,6 +88,9 @@ config :swoosh, :api_client, false
 # Configure Swoosh mailer for development
 config :blind_shop, BlindShop.Mailer, adapter: Swoosh.Adapters.Local
 
+# Set environment identifier for runtime checks
+config :blind_shop, :environment, :dev
+
 if File.exists?("config/dev.secrets.exs") do
   import_config "dev.secrets.exs"
 end

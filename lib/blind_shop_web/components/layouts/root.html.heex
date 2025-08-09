@@ -7,28 +7,71 @@
     <.live_title default="Blind Restoration" suffix=" · Blind Restoration">
       {assigns[:page_title]}
     </.live_title>
-    <meta name="description" content={assigns[:meta_description] || "Professional blind repair service with 5-day turnaround. Mail-in blind restringing and repair for mini, vertical, honeycomb, and roman blinds. Expert restoration guaranteed."} />
-    <meta name="keywords" content={assigns[:meta_keywords] || "blind repair, blind restringing, blind repair service, mini blind repair, vertical blind repair, broken blind repair, mail-in blind repair"} />
+    <meta
+      name="description"
+      content={
+        assigns[:meta_description] ||
+          "Professional blind repair service with 5-day turnaround. Mail-in blind restringing and repair for mini, vertical, honeycomb, and roman blinds. Expert restoration guaranteed."
+      }
+    />
+    <meta
+      name="keywords"
+      content={
+        assigns[:meta_keywords] ||
+          "blind repair, blind restringing, blind repair service, mini blind repair, vertical blind repair, broken blind repair, mail-in blind repair"
+      }
+    />
     
-    <!-- Open Graph / Facebook -->
+<!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={assigns[:canonical_url] || "https://blindrestoration.com"} />
-    <meta property="og:title" content={assigns[:og_title] || assigns[:page_title] || "Professional Blind Repair Service | BlindRestoration"} />
-    <meta property="og:description" content={assigns[:meta_description] || "Professional blind repair service with 5-day turnaround. Mail-in blind restringing and repair for all blind types."} />
-    <meta property="og:image" content={assigns[:og_image] || "https://blindrestoration.com/images/og-image.jpg"} />
+    <meta
+      property="og:title"
+      content={
+        assigns[:og_title] || assigns[:page_title] ||
+          "Professional Blind Repair Service | BlindRestoration"
+      }
+    />
+    <meta
+      property="og:description"
+      content={
+        assigns[:meta_description] ||
+          "Professional blind repair service with 5-day turnaround. Mail-in blind restringing and repair for all blind types."
+      }
+    />
+    <meta
+      property="og:image"
+      content={assigns[:og_image] || "https://blindrestoration.com/images/og-image.jpg"}
+    />
     
-    <!-- Twitter -->
+<!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content={assigns[:og_title] || assigns[:page_title] || "Professional Blind Repair Service | BlindRestoration"} />
-    <meta property="twitter:description" content={assigns[:meta_description] || "Professional blind repair service with 5-day turnaround. Mail-in blind restringing and repair for all blind types."} />
-    <meta property="twitter:image" content={assigns[:og_image] || "https://blindrestoration.com/images/og-image.jpg"} />
+    <meta
+      property="twitter:title"
+      content={
+        assigns[:og_title] || assigns[:page_title] ||
+          "Professional Blind Repair Service | BlindRestoration"
+      }
+    />
+    <meta
+      property="twitter:description"
+      content={
+        assigns[:meta_description] ||
+          "Professional blind repair service with 5-day turnaround. Mail-in blind restringing and repair for all blind types."
+      }
+    />
+    <meta
+      property="twitter:image"
+      content={assigns[:og_image] || "https://blindrestoration.com/images/og-image.jpg"}
+    />
     
-    <!-- Canonical URL -->
+<!-- Canonical URL -->
     <link rel="canonical" href={assigns[:canonical_url] || "https://blindrestoration.com"} />
-    
-    <%= if Mix.env() == :prod do %>
+
+    <%= if Application.get_env(:blind_shop, :environment) == :prod do %>
       <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-97LW5CT0RN"></script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-97LW5CT0RN">
+      </script>
       <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -37,85 +80,85 @@
         gtag('config', 'G-97LW5CT0RN');
       </script>
     <% end %>
-
-    <!-- JSON-LD Structured Data -->
+    
+<!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "BlindRestoration",
-      "description": "Professional blind repair service with guaranteed 5-day turnaround. Mail-in blind restringing for mini, vertical, honeycomb, and roman blinds.",
-      "url": "https://blindrestoration.com",
-      "telephone": "+1-555-BLINDS",
-      "email": "support@blindrestoration.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "123 Repair Lane",
-        "addressLocality": "Your City",
-        "addressRegion": "Your State",
-        "postalCode": "12345",
-        "addressCountry": "US"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "40.7128",
-        "longitude": "-74.0060"
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "08:00",
-        "closes": "17:00"
-      },
-      "serviceArea": {
-        "@type": "Country",
-        "name": "United States"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Blind Repair Services",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Mini Blind Repair",
-              "description": "Professional mini blind restringing and repair service"
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "BlindRestoration",
+        "description": "Professional blind repair service with guaranteed 5-day turnaround. Mail-in blind restringing for mini, vertical, honeycomb, and roman blinds.",
+        "url": "https://blindrestoration.com",
+        "telephone": "+1-555-BLINDS",
+        "email": "support@blindrestoration.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "123 Repair Lane",
+          "addressLocality": "Your City",
+          "addressRegion": "Your State",
+          "postalCode": "12345",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "40.7128",
+          "longitude": "-74.0060"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "17:00"
+        },
+        "serviceArea": {
+          "@type": "Country",
+          "name": "United States"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Blind Repair Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Mini Blind Repair",
+                "description": "Professional mini blind restringing and repair service"
+              }
+            },
+            {
+              "@type": "Offer", 
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Vertical Blind Repair",
+                "description": "Expert vertical blind repair and restringing"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service", 
+                "name": "Honeycomb Blind Repair",
+                "description": "Honeycomb and cellular shade repair service"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Roman Shade Repair", 
+                "description": "Professional roman shade repair and restoration"
+              }
             }
-          },
-          {
-            "@type": "Offer", 
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Vertical Blind Repair",
-              "description": "Expert vertical blind repair and restringing"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service", 
-              "name": "Honeycomb Blind Repair",
-              "description": "Honeycomb and cellular shade repair service"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Roman Shade Repair", 
-              "description": "Professional roman shade repair and restoration"
-            }
-          }
-        ]
-      },
-      "priceRange": "$55-$200",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "150"
+          ]
+        },
+        "priceRange": "$55-$200",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "150"
+        }
       }
-    }
     </script>
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>

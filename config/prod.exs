@@ -17,5 +17,8 @@ config :swoosh, local: false
 # Do not print debug messages in production
 config :logger, level: :info
 
+# Set environment identifier for runtime checks
+config :blind_shop, :environment, :prod
+
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
