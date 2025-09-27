@@ -111,8 +111,10 @@ if config_env() == :prod do
   # are not using SMTP. Here is an example of the configuration:
   #
   config :blind_shop, BlindShop.Mailer,
-    adapter: Swoosh.Adapters.Postmark,
-    api_key: System.get_env("POSTMARK_API_KEY")
+    adapter: Swoosh.Adapters.AmazonSES,
+    region: System.get_env("AWS_REGION"),
+    access_key: System.get_env("AWS_ACCESS_KEY_ID"),
+    secret: System.get_env("AWS_SECRET_ACCESS_KEY")
 
   #
   # For this example you need include a HTTP client required by Swoosh API client.
