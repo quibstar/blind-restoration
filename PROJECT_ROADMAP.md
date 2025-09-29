@@ -170,7 +170,7 @@ Order Created → Received → Assessed → Repairing → Invoice Sent → Paid 
 
 ## 🎯 Success Metrics
 - Customer satisfaction: >95%
-- Turnaround time: <5 days (currently promoting "5-Day Turnaround")
+- Turnaround time: <10 days (currently promoting "10-Day Turnaround")
 - Return customer rate: >30%
 - Google reviews: >4.5 stars
 - **NEW**: Email delivery rate: >98%

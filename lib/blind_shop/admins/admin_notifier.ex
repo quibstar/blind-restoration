@@ -4,6 +4,7 @@ defmodule BlindShop.Admins.AdminNotifier do
 
   alias BlindShop.Mailer
   alias BlindShop.Admins.Admin
+  alias BlindShop.EmailTracker
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do
@@ -22,19 +23,24 @@ defmodule BlindShop.Admins.AdminNotifier do
 
     Logger.info("Email struct created: #{inspect(email)}")
 
-    case Mailer.deliver(email) do
-      {:ok, metadata} ->
-        Logger.info("Email sent successfully: #{inspect(metadata)}")
-        {:ok, email}
+    result =
+      case Mailer.deliver(email) do
+        {:ok, metadata} ->
+          Logger.info("Email sent successfully: #{inspect(metadata)}")
+          {:ok, email}
 
-      {:error, reason} ->
-        Logger.error("Failed to send email: #{inspect(reason)}")
-        {:error, reason}
+        {:error, reason} ->
+          Logger.error("Failed to send email: #{inspect(reason)}")
+          {:error, reason}
 
-      result ->
-        Logger.warning("Unexpected email delivery result: #{inspect(result)}")
-        result
-    end
+        result ->
+          Logger.warning("Unexpected email delivery result: #{inspect(result)}")
+          result
+      end
+
+    # Track the delivery result
+    EmailTracker.track_delivery(recipient, subject, result)
+    result
   end
 
   @doc """

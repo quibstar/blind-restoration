@@ -1,11 +1,19 @@
 defmodule BlindShop.Accounts.UserNotifier do
   import Swoosh.Email
+  require Logger
 
   alias BlindShop.Mailer
   alias BlindShop.Accounts.User
+  alias BlindShop.EmailTracker
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, text_body, html_body) do
+    Logger.info("Attempting to send email to: #{recipient}, subject: #{subject}")
+
+    # Log the mailer configuration
+    mailer_config = Application.get_env(:blind_shop, BlindShop.Mailer, [])
+    Logger.info("Mailer adapter: #{inspect(mailer_config[:adapter])}")
+
     email =
       new()
       |> to(recipient)
@@ -14,9 +22,26 @@ defmodule BlindShop.Accounts.UserNotifier do
       |> text_body(text_body)
       |> html_body(html_body)
 
-    with {:ok, _metadata} <- Mailer.deliver(email) do
-      {:ok, email}
-    end
+    Logger.info("Email struct created: #{inspect(email)}")
+
+    result =
+      case Mailer.deliver(email) do
+        {:ok, metadata} ->
+          Logger.info("Email sent successfully: #{inspect(metadata)}")
+          {:ok, email}
+
+        {:error, reason} ->
+          Logger.error("Failed to send email: #{inspect(reason)}")
+          {:error, reason}
+
+        result ->
+          Logger.warning("Unexpected email delivery result: #{inspect(result)}")
+          result
+      end
+
+    # Track the delivery result
+    EmailTracker.track_delivery(recipient, subject, result)
+    result
   end
 
   # Render email template with layout
@@ -51,7 +76,7 @@ defmodule BlindShop.Accounts.UserNotifier do
   """
   def deliver_update_email_instructions(user, url) do
     subject = "Update Your Email Address - BlindRestoration"
-    
+
     text_body = """
     Update Your Email Address
 
@@ -67,11 +92,12 @@ defmodule BlindShop.Accounts.UserNotifier do
     The BlindRestoration Team
     """
 
-    html_body = render_template("email_update_instructions", %{
-      user: user,
-      url: url,
-      subject: subject
-    })
+    html_body =
+      render_template("email_update_instructions", %{
+        user: user,
+        url: url,
+        subject: subject
+      })
 
     deliver(user.email, subject, text_body, html_body)
   end
@@ -88,7 +114,7 @@ defmodule BlindShop.Accounts.UserNotifier do
 
   defp deliver_magic_link_instructions(user, url) do
     subject = "Login to Your BlindRestoration Account"
-    
+
     text_body = """
     Login to Your Account
 
@@ -104,18 +130,19 @@ defmodule BlindShop.Accounts.UserNotifier do
     The BlindRestoration Team
     """
 
-    html_body = render_template("login_instructions", %{
-      user: user,
-      url: url,
-      subject: subject
-    })
+    html_body =
+      render_template("login_instructions", %{
+        user: user,
+        url: url,
+        subject: subject
+      })
 
     deliver(user.email, subject, text_body, html_body)
   end
 
   defp deliver_confirmation_instructions(user, url) do
     subject = "Welcome to BlindRestoration - Confirm Your Account"
-    
+
     text_body = """
     Welcome to BlindRestoration!
 
@@ -131,11 +158,12 @@ defmodule BlindShop.Accounts.UserNotifier do
     The BlindRestoration Team
     """
 
-    html_body = render_template("confirmation_instructions", %{
-      user: user,
-      url: url,
-      subject: subject
-    })
+    html_body =
+      render_template("confirmation_instructions", %{
+        user: user,
+        url: url,
+        subject: subject
+      })
 
     deliver(user.email, subject, text_body, html_body)
   end

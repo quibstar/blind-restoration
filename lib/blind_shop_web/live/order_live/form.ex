@@ -183,8 +183,8 @@ defmodule BlindShopWeb.OrderLive.Form do
                     type="select"
                     label="Service Level"
                     options={[
-                      {"Standard (7-10 days)", "standard"},
-                      {"Rush (5 days) +25%", "rush"},
+                      {"Standard (10 days)", "standard"},
+                      {"Rush (7 days) +25%", "rush"},
                       {"Priority (3 days) +50%", "priority"},
                       {"Express (2 days) +75%", "express"}
                     ]}

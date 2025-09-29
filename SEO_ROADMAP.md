@@ -58,7 +58,7 @@ Dominate search results for blind repair services nationally while building stro
 - [ ] **Homepage optimization**
   - Target: "blind repair service"
   - H1: "Professional Blind Repair Service - Mail-In & Local"
-  - Meta description highlighting 5-day turnaround and mail-in service
+  - Meta description highlighting 10-day turnaround and mail-in service
   
 - [ ] **Service pages creation**
   - `/services/mini-blind-repair` (Target: "mini blind repair")
@@ -92,7 +92,7 @@ Create high-value content targeting repair keywords:
 #### **Service-Focused Content** (Target: Commercial keywords)
 - [ ] "Mail-In Blind Repair: How It Works"
 - [ ] "Professional Blind Repair vs DIY: Cost Comparison"
-- [ ] "5-Day Blind Repair Guarantee: Our Process"
+- [ ] "10-Day Blind Repair Guarantee: Our Process"
 - [ ] "Blind Repair for Property Managers: Bulk Services"
 
 ### **Content Calendar**

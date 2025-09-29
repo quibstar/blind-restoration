@@ -5,9 +5,9 @@ defmodule BlindShopWeb.PageController do
     # The home page is often custom made,
     # so skip the default app layout.
     conn
-    |> assign(:page_title, "Professional Blind Repair Service | 5-Day Turnaround")
-    |> assign(:meta_description, "Expert blind repair service with guaranteed 5-day turnaround. Mail-in blind restringing for mini, vertical, honeycomb, and roman blinds. Get instant quote online.")
-    |> assign(:meta_keywords, "blind repair, blind restringing, blind repair service, mini blind repair, vertical blind repair, mail-in blind repair, 5-day turnaround")
+    |> assign(:page_title, "Professional Blind Repair Service | 10-Day Turnaround")
+    |> assign(:meta_description, "Expert blind repair service with guaranteed 10-day turnaround. Mail-in blind restringing for mini, vertical, honeycomb, and roman blinds. Get instant quote online.")
+    |> assign(:meta_keywords, "blind repair, blind restringing, blind repair service, mini blind repair, vertical blind repair, mail-in blind repair, 10-day turnaround")
     |> assign(:canonical_url, "https://blindrestoration.com")
     |> render(:home, layout: false)
   end

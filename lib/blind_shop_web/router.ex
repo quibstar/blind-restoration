@@ -138,7 +138,7 @@ defmodule BlindShopWeb.Router do
 
     live_session :current_admin,
       on_mount: [{BlindShopWeb.AdminAuth, :mount_current_scope}] do
-      live "/admins/register", AdminLive.Registration, :new
+      # live "/admins/register", AdminLive.Registration, :new
       live "/admins/log-in", AdminLive.Login, :new
       live "/admins/log-in/:token", AdminLive.Confirmation, :new
     end

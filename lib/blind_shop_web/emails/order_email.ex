@@ -320,8 +320,8 @@ defmodule BlindShopWeb.Emails.OrderEmail do
     case service_level do
       "express" -> "Within 2 days"
       "priority" -> "Within 3 days"
-      "rush" -> "Within 5 days"
-      _ -> "Within 7-10 days"
+      "rush" -> "Within 7 days"
+      _ -> "Within 10 days"
     end
   end
 

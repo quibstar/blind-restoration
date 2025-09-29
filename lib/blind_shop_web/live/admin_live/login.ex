@@ -15,11 +15,11 @@ defmodule BlindShopWeb.AdminLive.Login do
               <%= if @current_scope do %>
                 You need to reauthenticate to perform sensitive actions on your account.
               <% else %>
-                Don't have an account? <.link
+                <%!-- Don't have an account? <.link
                   navigate={~p"/admins/register"}
                   class="font-semibold text-brand hover:underline"
                   phx-no-format
-                >Sign up</.link> for an account now.
+                >Sign up</.link> for an account now. --%>
               <% end %>
             </:subtitle>
           </.header>
@@ -58,7 +58,7 @@ defmodule BlindShopWeb.AdminLive.Login do
 
         <div class="divider">or</div>
 
-        <.form
+        <%!-- <.form
           :let={f}
           for={@form}
           id="login_form_password"
@@ -86,7 +86,7 @@ defmodule BlindShopWeb.AdminLive.Login do
           <.button class="btn btn-primary btn-soft w-full mt-2">
             Log in only this time
           </.button>
-        </.form>
+        </.form> --%>
       </div>
     </Layouts.app>
     """
