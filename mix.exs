@@ -54,6 +54,7 @@ defmodule BlindShop.MixProject do
        compile: false,
        depth: 1},
       {:swoosh, "~> 1.16"},
+      {:gen_smtp, "~> 1.2"},
       {:oban, "~> 2.17"},
       {:req, "~> 0.5"},
       {:stripity_stripe, "~> 3.2"},
