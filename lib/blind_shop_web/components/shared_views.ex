@@ -70,7 +70,11 @@ defmodule SharedViews do
             <li><.link navigate={~p"/admin/dashboard"} class="btn btn-ghost">Dashboard</.link></li>
             <li><.link navigate={~p"/admin/orders"} class="btn btn-ghost">Orders</.link></li>
             <li><.link navigate={~p"/admin/customers"} class="btn btn-ghost">Customers</.link></li>
-            <li><.link navigate={~p"/admin/contact-inquiries"} class="btn btn-ghost">Contact Inquiries</.link></li>
+            <li>
+              <.link navigate={~p"/admin/contact-inquiries"} class="btn btn-ghost">
+                Contact Inquiries
+              </.link>
+            </li>
             <li><.link navigate={~p"/admin/reports"} class="btn btn-ghost">Reports</.link></li>
 
             <div class="dropdown dropdown-end">
@@ -207,9 +211,9 @@ defmodule SharedViews do
       <div class="max-w-7xl mx-auto md:flex justify-between items-center p-4 space-y-4 md:space-y-0">
         <p>© {DateTime.utc_now().year} BlindRestoration.com. All rights reserved.</p>
         <div class="">
-          <.link navigate="/about" class="footer-link">
+          <%!-- <.link navigate="/about" class="footer-link">
             {gettext("About")}
-          </.link>
+          </.link> --%>
 
           <.link navigate="/terms-of-service" class="footer-link">
             {gettext("Terms")}
@@ -223,9 +227,9 @@ defmodule SharedViews do
             {gettext("Contact")}
           </.link>
 
-          <.link navigate="/faq" class="footer-link">
+          <%!-- <.link navigate="/faq" class="footer-link">
             {gettext("FAQ")}
-          </.link>
+          </.link> --%>
         </div>
         <SharedViews.social_links />
       </div>
