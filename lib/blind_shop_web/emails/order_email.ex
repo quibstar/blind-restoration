@@ -8,7 +8,7 @@ defmodule BlindShopWeb.Emails.OrderEmail do
     email =
       new()
       |> to({recipient_name, recipient_email})
-      |> from({"BlindShop", "support@blindrestoration.com"})
+      |> from({"BlindShop", "noreply@blindrestoration.com"})
       |> subject(subject)
       |> text_body(text_body)
       |> html_body(html_body)

@@ -17,7 +17,7 @@ defmodule BlindShop.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"BlindShop", "support@blindrestoration.com"})
+      |> from({"BlindShop", "noreply@blindrestoration.com"})
       |> subject(subject)
       |> text_body(text_body)
       |> html_body(html_body)
